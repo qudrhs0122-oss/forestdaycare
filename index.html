@@ -652,6 +652,8 @@ body:has(#pg-home.on) .foot3{display:none}
 .gal .gi .im,.bphotos figure,.pphotos figure{overflow:hidden}
 @media (max-width:860px){.pphotos{grid-template-columns:1fr 1fr}.bdetail .bphotos{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.pphotos{grid-template-columns:1fr}}
+.dflow .dc b{font-size:clamp(17px,1.5vw,22px)}
+.dflow .dc span{font-size:clamp(13px,1vw,15px)}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1227,7 +1229,7 @@ function buildMenus(){
   $('#acc').innerHTML = MENU.map(m=>`<div data-p="${m.id}"><button onclick="this.parentNode.classList.toggle('open')">${m.name}<svg><use href="#i-chev"/></svg></button><div class="subs">${m.sub.map(s=>`<a href="#${m.id}-${s[0]}">${s[1]}</a>`).join('')}</div></div>`).join('');
   document.querySelectorAll('[data-tabs]').forEach(el=>{ const m=MENU.find(x=>x.id===el.dataset.tabs);
     el.innerHTML=m.sub.map(s=>`<a href="#${m.id}-${s[0]}">${s[1]}</a>`).join(''); });
-  const daily=[['sun','08:30','오전 송영'],['dumb','10:00','건강 체크 · 체조'],['brain','11:00','인지 프로그램'],['fork','12:00','점심 식사 · 휴식'],['cup','14:00','여가 · 간식'],['car','16:30','오후 송영']];
+  const daily=[['sun','08:00','송영'],['dumb','10:00','건강 체크 · 체조'],['brain','11:00','인지 프로그램'],['fork','12:00','점심 식사 · 휴식'],['cup','14:00','여가 · 간식'],['bowl','17:00','저녁 식사'],['car','18:00','하원']];
   document.querySelectorAll('[data-daily]').forEach(el=>el.innerHTML=daily.map((d,i)=>
     (i?`<span class="chev">${ico('i-chev')}</span>`:'')+`<div class="dc"><div class="ic ${d[0]==='sun'?'sun':''}">${ico('i-'+d[0])}</div><b>${d[1]}</b><span>${d[2]}</span></div>`).join(''));
 }
