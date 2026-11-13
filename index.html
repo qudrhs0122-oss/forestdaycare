@@ -893,6 +893,42 @@ body:has(#pg-home.on) .foot3{display:none}
   .pv-card.v .tree{width:55%;opacity:.45}
   .pv-l,.pv-r{width:40%;opacity:.7}
 }
+
+/* 숲이 걸어온 길 v2 */
+#about-history{padding:130px 0 140px}
+#about-history .lead2{margin-bottom:70px}
+.hist{gap:90px}
+.hist-l{top:130px}
+.since{font-size:52px;margin-bottom:24px}
+.hist-l h3{font-size:22px;line-height:1.6;margin-bottom:18px}
+.hist-l p{line-height:2}
+.timeline{position:relative;border-left:0;padding:10px 0 10px 70px;list-style:none;margin:0}
+.timeline:before{content:"";position:absolute;left:23px;top:0;bottom:0;width:3px;border-radius:3px;background:#e2e9dd}
+.timeline .tl-fill{position:absolute;left:23px;top:0;width:3px;height:0;border-radius:3px;background:linear-gradient(180deg,#a9d48e,#3f7a40);box-shadow:0 0 10px rgba(110,180,80,.7),0 0 22px rgba(110,180,80,.35);transition:height .15s linear}
+.timeline .tl-fill:after{content:"";position:absolute;left:50%;bottom:-8px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle,#fff 0%,#c9f0a8 40%,rgba(140,210,100,0) 72%);filter:blur(1px)}
+.timeline li{position:relative;padding:0 0 90px;opacity:.35;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.timeline li:last-child{padding-bottom:10px}
+.timeline li:before{display:none}
+.timeline li.lit{opacity:1;transform:none}
+.timeline .dot{position:absolute;left:-58px;top:2px;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid #cfdcc8;transition:all .6s}
+.timeline li.lit .dot{background:#3f7a40;border-color:#e6f3dc;box-shadow:0 0 0 6px rgba(120,180,90,.18),0 0 18px 4px rgba(140,210,100,.65)}
+.timeline .yr{display:inline-block;background:#e9efe4;color:#2e5a32;font-weight:800;font-size:16px;border-radius:8px;padding:4px 14px;margin-bottom:14px;transition:all .6s}
+.timeline li.lit .yr{background:var(--g1);color:#fff}
+.timeline b{display:block;font-size:24px;color:#1f2a20;margin-bottom:10px;letter-spacing:-.02em}
+.timeline p{margin:0;color:#4b504a;line-height:1.9;font-size:16.5px}
+#about-history .vision2{margin-top:110px;padding:50px 40px}
+@media (max-width:860px){
+  #about-history{padding:70px 0 80px}
+  #about-history .lead2{margin-bottom:36px}
+  .hist{gap:40px}
+  .since{font-size:40px}
+  .timeline{padding-left:52px}
+  .timeline:before,.timeline .tl-fill{left:13px}
+  .timeline .dot{left:-50px;width:22px;height:22px}
+  .timeline li{padding-bottom:60px}
+  .timeline b{font-size:20px}
+  #about-history .vision2{margin-top:60px;padding:36px 22px}
+}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1539,6 +1575,7 @@ function showPage(page, anchor){
     const hp=pg.querySelector('.subhero p'); if(!hp.dataset.d) hp.dataset.d=hp.textContent; hp.textContent=(sub&&sub[2])||hp.dataset.d;
     document.querySelectorAll('#acc .subs a').forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+cur.id));
     document.title=(sub?sub[1]+' | ':'')+m.name+' | 숲 데이케어센터';
+    setTimeout(updateTL,250);
     scrollTo(0,0); requestAnimationFrame(()=>scrollTo(0,0)); setTimeout(()=>scrollTo(0,0),30); setTimeout(()=>scrollTo(0,0),200); return;
   }
   document.title='숲 데이케어센터 | 숲 · 더숲 · 한강숲';
@@ -1624,7 +1661,7 @@ function renderSite(){
   $('#home-gallery').innerHTML = gal.slice(0,6).map(gi).join('') + ph(Math.max(0,3-gal.length));
   $('#gallery-board').innerHTML = gal.map(gi).join('') || ph(4);
   // 기관소개
-  $('#history').innerHTML = DB.history.length ? [...DB.history].sort((a,b)=>String(a.year).localeCompare(String(b.year))).map(h=>`<li><span class="yr">${esc(h.year)}</span><b>${esc(h.title)}</b><p>${esc(h.text)}</p></li>`).join('') : '<li><b>준비 중</b><p>연혁을 정리하고 있습니다.</p></li>';
+  $('#history').innerHTML = '<span class="tl-fill"></span>' + (DB.history.length ? [...DB.history].sort((a,b)=>String(a.year).localeCompare(String(b.year))).map(h=>`<li><span class="dot"></span><span class="yr">${esc(h.year)}</span><b>${esc(h.title)}</b><p>${esc(h.text)}</p></li>`).join('') : '<li><span class="dot"></span><b>준비 중</b><p>연혁을 정리하고 있습니다.</p></li>');
   $('#status-table').innerHTML = `<tr><th>구분</th><th>센터명</th><th>주소</th><th>대표전화</th><th>정원</th></tr>`+
     allCenters().map(x=>`<tr><td>${esc(x.kindName)}${x.kind==='day'?'<br><small>'+esc(x.no)+'</small>':''}</td><td><b>${esc(x.name)}</b></td><td class="l">${esc(x.addr)}</td><td>${esc(x.tel)}</td><td>${x.cap?esc(x.cap)+'명':'-'}</td></tr>`).join('');
   $('#maps').innerHTML = allCenters().map(x=>`<div class="mapc"><span class="pill">${esc(x.kindName)}</span><h4 style="margin-top:8px">${esc(x.name)}</h4>
@@ -2193,6 +2230,17 @@ function saveGallery(id){
   save(); closeModal(); vWeb(); toast('저장되었습니다');
 }
 
+
+/* 연혁 타임라인: 스크롤에 따라 빛이 내려가며 점이 켜짐 */
+function updateTL(){
+  const ul=document.getElementById('history'); if(!ul||!ul.offsetParent) return;
+  const r=ul.getBoundingClientRect(), line=innerHeight*0.62;
+  const h=Math.max(0,Math.min(r.height,line-r.top));
+  const fill=ul.querySelector('.tl-fill'); if(fill) fill.style.height=h+'px';
+  ul.querySelectorAll('li').forEach((li,i)=>{ const d=li.querySelector('.dot'); const y=d.getBoundingClientRect().top+8;
+    li.classList.toggle('lit', y<line || i===0); });
+}
+addEventListener('scroll',updateTL,{passive:true}); addEventListener('resize',updateTL);
 /* ---------- 시작 ---------- */
 buildMenus(); renderSite(); slideShow(0); route();
 try{ const id=sessionStorage.getItem(KEY+'-me'); const a=id&&DB.accounts.find(x=>x.id===id); if(a){ ME=a; CUR=a.branch==='all'?'b1':a.branch; showAdmin(); } }catch(e){}
