@@ -940,6 +940,101 @@ body:has(#pg-home.on) .foot3{display:none}
 .rv.fade{transform:none}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* 기관 현황 · 오시는 길 */
+.page .psec.og{padding:0;min-height:0;background:linear-gradient(180deg,#fbf8f3 0%,#f7f2ea 100%)!important;position:relative;overflow:hidden}
+.og-in{max-width:1120px;margin:0 auto;padding:100px 30px 90px}
+.og-head{position:relative;margin-bottom:46px}
+.og-head small{display:block;font-size:13px;font-weight:700;letter-spacing:.3em;color:#8a6a45}
+.og-head h2{font-size:clamp(28px,3vw,40px);margin:10px 0 16px;color:#2b241c;letter-spacing:-.03em}
+.og-head h2 em{font-style:normal;color:#2b241c}
+.og-head p{margin:0;color:#4b4339;line-height:1.85;font-size:16.5px}
+.og-head img{position:absolute;right:20px;top:-10px;width:140px;opacity:.55;filter:sepia(.6)}
+.og-table{background:#fff;border-radius:22px;box-shadow:0 10px 30px rgba(90,70,40,.08);padding:18px;overflow:auto;margin-bottom:90px}
+.og-table table{width:100%;border-collapse:collapse;font-size:16px}
+.og-table th{background:#f3eee6;color:#2b241c;font-weight:800;padding:16px 12px;border:0;border-right:1px solid #fff}
+.og-table th:first-child{border-radius:12px 0 0 12px}.og-table th:last-child{border-radius:0 12px 12px 0;border-right:0}
+.og-table td{padding:18px 14px;border:0;border-bottom:1px solid #efe9e0;border-right:1px solid #efe9e0;text-align:left;white-space:normal;color:#3b342b}
+.og-table tr:last-child td{border-bottom:0}
+.og-table td:last-child{border-right:0;text-align:center}
+.og-table td.k{display:flex;align-items:center;gap:12px;font-size:14.5px;line-height:1.4}
+.og-table .ic{width:34px;height:34px;color:#9a7550;flex:none}
+.og-table .ic svg{width:100%;height:100%}
+.og-table td.n{font-weight:800;font-size:17px;color:#2b241c;text-align:center}
+.og-table td.a svg,.og-table td.t svg{width:16px;height:16px;color:#7a6146;vertical-align:-2px;margin-right:8px}
+.og-table td.t a{text-decoration:none;color:#2b241c;font-weight:600;white-space:nowrap}
+.capp{display:inline-block;background:#f2e8da;color:#5b4027;font-weight:800;border-radius:99px;padding:5px 16px}
+.og-loc-h{display:flex;gap:14px;align-items:flex-start;margin-bottom:24px}
+.og-loc-h>svg{width:34px;height:34px;color:#8a6a45;flex:none;margin-top:2px}
+.og-loc-h h3{margin:0 0 4px;font-size:clamp(22px,2.2vw,30px);color:#2b241c}
+.og-loc-h p{margin:0;color:#5b5247}
+.og-loc{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:stretch}
+.og-map{position:relative;border-radius:22px;overflow:hidden;background:#e9e4da;min-height:440px;box-shadow:0 10px 30px rgba(90,70,40,.08)}
+.og-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.og-map-cap{position:absolute;left:16px;top:16px;background:#fff;border-radius:99px;padding:8px 16px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.12);font-size:14.5px}
+.og-map-cap svg{width:16px;height:16px;color:#8a5a2b}
+.og-list{display:flex;flex-direction:column;gap:12px}
+.og-item{display:grid;grid-template-columns:96px 1fr auto;gap:16px;align-items:center;text-align:left;background:#fff;border:2px solid transparent;border-radius:16px;padding:12px 14px;box-shadow:0 4px 16px rgba(90,70,40,.07);cursor:pointer;font:inherit;color:#2b241c;transition:.2s}
+.og-item:hover{border-color:#e6d8c4}
+.og-item.on{border-color:#8a6a45;box-shadow:0 8px 22px rgba(138,106,69,.18)}
+.og-item .th{width:96px;height:66px;border-radius:10px;background:#eee center/cover no-repeat}
+.og-item .tx{display:flex;flex-direction:column;gap:3px;min-width:0}
+.og-item .tx b{font-size:16px}
+.og-item .tx b small{color:#8a6a45;font-weight:700}
+.og-item .tx span{font-size:13.5px;color:#4b4339;display:flex;align-items:center;gap:6px}
+.og-item .tx svg{width:14px;height:14px;color:#7a6146;flex:none}
+.og-item .bdg{background:#f2e8da;color:#5b4027;font-size:12.5px;font-weight:700;border-radius:99px;padding:5px 12px;white-space:nowrap;align-self:start}
+.og-links{display:flex;gap:8px;margin-top:4px}
+.og-links a{flex:1;text-align:center;border:1px solid #d9cbb6;border-radius:10px;padding:10px;text-decoration:none;color:#5b4027;font-weight:700;font-size:14px;background:#fffdf9}
+.og-foot{position:relative;text-align:center;padding:80px 20px 90px;background:linear-gradient(180deg,#f7f2ea,#f1e9dc)}
+.og-foot img{position:absolute;left:0;bottom:0;width:260px;opacity:.85}
+.og-foot p{margin:0;font-family:"Noto Serif KR",serif;font-style:italic;font-size:clamp(24px,2.6vw,36px);color:#3b342b;line-height:1.5}
+.og-foot em{color:#8a5a2b;font-weight:700}
+.og-foot i{display:block;width:50px;height:2px;background:#b08d4c;margin:24px auto 0}
+@media (max-width:980px){.og-loc{grid-template-columns:1fr}.og-map{min-height:340px}}
+@media (max-width:700px){
+  .og-in{padding:60px 18px 60px}
+  .og-head img{display:none}
+  .og-table{padding:8px;margin-bottom:60px}
+  .og-table table,.og-table tbody,.og-table tr,.og-table td{display:block;width:100%}
+  .og-table tr:first-child{display:none}
+  .og-table tr{border-bottom:1px solid #efe9e0;padding:12px 6px}
+  .og-table td{border:0!important;padding:4px 6px;text-align:left!important}
+  .og-table td.n{font-size:18px}
+  .og-item{grid-template-columns:72px 1fr}
+  .og-item .th{width:72px;height:54px}
+  .og-item .bdg{display:none}
+  .og-foot img{width:150px}
+}
+
+/* 접근성 위젯 */
+.a11y{position:fixed;right:20px;bottom:20px;z-index:150}
+.a11y-fab{width:64px;height:64px;border-radius:50%;border:0;background:#24482a;color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;cursor:pointer}
+.a11y-fab span{font-size:24px;font-weight:800}
+.a11y-fab small{font-size:11px;margin-top:3px}
+.a11y-fab:hover{background:#2e5a32}
+.a11y-panel{position:absolute;right:0;bottom:78px;width:280px;background:#fff;color:#1f2a20;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.22);padding:20px}
+.a11y-panel>b{display:block;font-size:17px;margin-bottom:14px}
+.a11y-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;font-size:15px;font-weight:600}
+.a11y-seg{display:flex;border:1px solid #d9dfd4;border-radius:10px;overflow:hidden}
+.a11y-seg button{border:0;background:#fff;padding:8px 10px;font-size:13.5px;font-weight:700;color:#4b504a;cursor:pointer}
+.a11y-seg button+button{border-left:1px solid #d9dfd4}
+.a11y-seg button.on{background:#2e5a32;color:#fff}
+.a11y-tg{width:54px;height:30px;border-radius:99px;border:0;background:#cfd6cb;position:relative;cursor:pointer;padding:0}
+.a11y-tg i{position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.a11y-tg.on{background:#2e5a32}
+.a11y-tg.on i{left:27px}
+.a11y-reset{width:100%;border:1px solid #d9dfd4;background:#f7f8f5;border-radius:10px;padding:9px;font-weight:700;color:#4b504a;cursor:pointer}
+#admin:not(.hidden)~.a11y,body:has(#admin:not(.hidden)) .a11y{display:none}
+/* 큰 글자 */
+html[data-fs="1"] .site-main{zoom:1.15}
+html[data-fs="2"] .site-main{zoom:1.3}
+html[data-fs="1"] .side-nav{font-size:110%}
+html[data-fs="2"] .side-nav{font-size:120%}
+/* 명암 반전 */
+html.a11y-dark{filter:invert(1) hue-rotate(180deg);background:#fff}
+html.a11y-dark img,html.a11y-dark iframe,html.a11y-dark video,html.a11y-dark .bimg,html.a11y-dark .th,html.a11y-dark .ph,html.a11y-dark .tree,html.a11y-dark .foot-scene,html.a11y-dark .hero-photo,html.a11y-dark .bphotos figure div,html.a11y-dark .pphotos figure div,html.a11y-dark .gal .im,html.a11y-dark .stack{filter:invert(1) hue-rotate(180deg)}
+html.a11y-dark .a11y{filter:invert(1) hue-rotate(180deg)}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1237,14 +1332,21 @@ td.l,th.l{text-align:left}
       </div>
       <div class="vision2"><span>앞으로의 비전</span><h3>인생의 두 번째 학교, 숲</h3><p>돌봄을 넘어 배움으로, 보호를 넘어 존엄으로.<br>어르신의 삶에 새로운 가능성을 더하는 시니어 라이프케어 전문기업으로 성장하겠습니다.</p></div>
     </div></section>
-    <section class="psec" id="about-status"><div class="wrap w">
-      <h2>기관 현황</h2><p class="lead2">ORGANIZATION</p>
-      <div class="tbl-wrap"><table class="dtable" id="status-table"></table></div>
-    </div></section>
-    <section class="psec" id="about-map"><div class="wrap w">
-      <h2>오시는 길</h2><p class="lead2">LOCATION</p>
-      <div class="maps" id="maps"></div>
-    </div></section>
+    <section class="psec og" id="about-status">
+      <div class="og-in">
+        <div class="og-head"><small>ORGANIZATION</small><h2>숲 네트워크 <em>기관 현황</em></h2><p>숲은 주야간보호 3개 센터와 방문요양 서비스를 통해<br>어르신이 가장 편안한 일상을 누리실 수 있도록 함께하고 있습니다.</p><img src="img/ceo_sprig.png" alt=""></div>
+        <div class="og-table"><table id="og-table"></table></div>
+        <div class="og-loc-h"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg><div><h3>기관 위치 안내</h3><p>센터를 누르면 지도에서 위치를 확인하실 수 있습니다.</p></div></div>
+        <div class="og-loc" data-mapblock></div>
+      </div>
+      <div class="og-foot"><img src="img/pv_leafL.png" alt=""><p>어르신의 일상에,<br><em>숲이 함께</em>합니다.</p><i></i></div>
+    </section>
+    <section class="psec og" id="about-map">
+      <div class="og-in">
+        <div class="og-head"><small>LOCATION</small><h2>오시는 <em>길</em></h2><p>가까운 센터를 선택하시면 지도와 길찾기를 바로 이용하실 수 있습니다.</p></div>
+        <div class="og-loc" data-mapblock></div>
+      </div>
+    </section>
   </div>
 
   <!-- ===================== 주야간보호 ===================== -->
@@ -1402,6 +1504,17 @@ td.l,th.l{text-align:left}
   <main class="panel" id="panel"></main>
 </div>
 
+
+<div class="a11y" id="a11y">
+  <div class="a11y-panel" id="a11y-panel" role="dialog" aria-label="화면 보기 설정" hidden>
+    <b>화면 보기 설정</b>
+    <div class="a11y-row"><span>글자 크기</span><div class="a11y-seg">
+      <button data-fs="0" onclick="a11ySet('size',0)">기본</button><button data-fs="1" onclick="a11ySet('size',1)">크게</button><button data-fs="2" onclick="a11ySet('size',2)">아주 크게</button></div></div>
+    <div class="a11y-row"><span>명암 반전</span><button class="a11y-tg" data-dark onclick="a11ySet('dark',!A11Y.dark)" aria-pressed="false"><i></i></button></div>
+    <button class="a11y-reset" onclick="A11Y={size:0,dark:false};applyA11y()">처음 상태로</button>
+  </div>
+  <button class="a11y-fab" aria-label="글자 크기 · 명암 반전 설정" onclick="const p=$('#a11y-panel');p.hidden=!p.hidden"><span>가</span><small>보기</small></button>
+</div>
 <div id="modal-root"></div>
 <div id="print-area"></div>
 
@@ -1538,7 +1651,7 @@ const fmtDate = d=>d.replace(/-/g,'.');
 
 /* ---------- 메뉴 구조 ---------- */
 const MENU = [
-  {id:'about',    name:'기관소개',   sub:[['ceo','대표 인사말','숲과 함께, 더 건강하고 더 행복한 일상을 만들어 갑니다.'],['greeting','브랜드 스토리','어르신의 하루가 배움이 되고, 일상이 행복이 되는 곳.'],['vision','철학 · 미션 · 비전','편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임.'],['history','숲이 걸어온 길'],['status','기관 현황'],['map','오시는 길']]},
+  {id:'about',    name:'기관소개',   sub:[['ceo','대표 인사말','숲과 함께, 더 건강하고 더 행복한 일상을 만들어 갑니다.'],['greeting','브랜드 스토리','어르신의 하루가 배움이 되고, 일상이 행복이 되는 곳.'],['vision','철학 · 미션 · 비전','편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임.'],['history','숲이 걸어온 길'],['status','기관 현황','주야간보호 3개 센터와 방문요양 서비스가 함께합니다.'],['map','오시는 길','가까운 센터의 위치와 길찾기를 안내합니다.']]},
   {id:'daycare',  name:'주야간보호', sub:[['intro','서비스 소개'],['b1','지점 안내'],['program','하루 일과 · 프로그램']]},
   {id:'homecare', name:'방문요양',   sub:[['intro','센터 소개'],['service','서비스 내용'],['process','이용 절차'],['recruit','요양보호사 채용']]},
   {id:'guide',    name:'이용안내',   sub:[['grade','장기요양등급 신청'],['process','이용 절차'],['cost','비용 안내'],['faq','자주 묻는 질문']]},
@@ -1725,7 +1838,7 @@ function doLogin(){
   closeModal(); showAdmin();
 }
 function logout(){ ME=null; try{sessionStorage.removeItem(KEY+'-me')}catch(e){}; showSite(); }
-function showSite(){ $('#admin').classList.add('hidden'); $('#site').classList.remove('hidden'); renderSite(); route(); }
+function showSite(){ $('#admin').classList.add('hidden'); $('#site').classList.remove('hidden'); renderSite(); renderOrg(); route(); }
 function showAdmin(){
   if(!ME){ openLogin(); return; }
   $('#site').classList.add('hidden'); $('#admin').classList.remove('hidden');
@@ -2269,8 +2382,53 @@ setupReveal('about-greeting',[
   ['.bs-body>p:not(.big-quote)','left',0],['.vals4.circ>div','up',150],['.big-quote','up'],['.foot-scene','fade']
 ]);
 document.querySelectorAll('#about-greeting .bs-body>p:not(.big-quote)').forEach((p,i)=>{ if(i%2) {p.classList.remove('left');p.classList.add('right');} });
+
+/* 기관 현황 표 + 실제 지도 */
+const MAP_ADDR = a=>String(a).split(',')[0].replace(/\(.*?\)/g,'').trim();
+const ICO_HOUSE='<svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M6 9.5V20h12V9.5M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+const ICO_HANDS='<svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9.5c-1-2-4.5-1.5-4.5 1 0 2 2.5 3.5 4.5 5 2-1.5 4.5-3 4.5-5 0-2.5-3.5-3-4.5-1z"/><path d="M3 12v5l4 3h3M21 12v5l-4 3h-3"/></g></svg>';
+function renderOrg(){
+  const cs=allCenters();
+  const tb=document.getElementById('og-table'); if(!tb) return;
+  tb.innerHTML='<tr><th>구분</th><th>센터명</th><th>주소</th><th>대표전화</th><th>정원</th></tr>'+cs.map(x=>`<tr>
+    <td class="k"><span class="ic">${x.kind==='day'?ICO_HOUSE:ICO_HANDS}</span><span>${x.kind==='day'?'주야간보호<br>'+esc(x.no):'방문요양'}</span></td>
+    <td class="n">${esc(x.name)}</td>
+    <td class="a">${ico('i-pin-f')}${esc(x.addr)}</td>
+    <td class="t"><a href="tel:${esc(x.tel)}">${ico('i-phone')}${esc(x.tel)}</a></td>
+    <td>${x.cap?`<span class="capp">${esc(x.cap)}명</span>`:'-'}</td></tr>`).join('');
+  document.querySelectorAll('[data-mapblock]').forEach((box,bi)=>{
+    box.innerHTML=`<div class="og-map"><iframe title="센터 위치 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=${encodeURIComponent(MAP_ADDR(cs[0].addr))}&hl=ko&z=16&output=embed"></iframe><div class="og-map-cap">${ico('i-pin-f')}<b>${esc(cs[0].name)}</b></div></div>
+      <div class="og-list">${cs.map((x,i)=>`<button class="og-item ${i?'':'on'}" data-i="${i}">
+        <span class="th" style="${x.thumb?`background-image:url('${x.thumb}')`:`background-image:url('${IMG.s4}');background-size:contain;background-color:#f6efe2`}"></span>
+        <span class="tx"><b>${esc(x.name)} <small>(${x.kind==='day'?esc(x.no):'방문요양'})</small></b><span>${ico('i-pin-f')}${esc(x.addr)}</span><span>${ico('i-phone')}${esc(x.tel)}</span></span>
+        <span class="bdg">${x.cap?'정원 '+esc(x.cap):'방문요양'}</span></button>`).join('')}
+        <div class="og-links"><a target="_blank" rel="noopener" data-nv href="${mapUrl(cs[0].addr)}">네이버 지도로 길찾기</a><a target="_blank" rel="noopener" data-kk href="https://map.kakao.com/?q=${encodeURIComponent(MAP_ADDR(cs[0].addr))}">카카오맵으로 길찾기</a></div></div>`;
+    box.querySelectorAll('.og-item').forEach(btn=>btn.onclick=()=>{
+      const x=cs[+btn.dataset.i];
+      box.querySelectorAll('.og-item').forEach(b=>b.classList.toggle('on',b===btn));
+      box.querySelector('iframe').src=`https://maps.google.com/maps?q=${encodeURIComponent(MAP_ADDR(x.addr))}&hl=ko&z=16&output=embed`;
+      box.querySelector('.og-map-cap b').textContent=x.name;
+      box.querySelector('[data-nv]').href=mapUrl(x.addr);
+      box.querySelector('[data-kk]').href='https://map.kakao.com/?q='+encodeURIComponent(MAP_ADDR(x.addr));
+    });
+  });
+}
+
+/* 접근성: 큰 글자 · 명암 반전 */
+const A11Y_KEY='sup-a11y';
+let A11Y={size:0,dark:false};
+try{ A11Y=Object.assign(A11Y,JSON.parse(localStorage.getItem(A11Y_KEY)||'{}')); }catch(e){}
+function applyA11y(){
+  document.documentElement.classList.toggle('a11y-dark',!!A11Y.dark);
+  document.documentElement.dataset.fs=A11Y.size;
+  const p=document.getElementById('a11y-panel'); if(!p) return;
+  p.querySelectorAll('[data-fs]').forEach(b=>b.classList.toggle('on',+b.dataset.fs===A11Y.size));
+  const d=p.querySelector('[data-dark]'); d.classList.toggle('on',!!A11Y.dark); d.setAttribute('aria-pressed',!!A11Y.dark);
+  try{ localStorage.setItem(A11Y_KEY,JSON.stringify(A11Y)); }catch(e){}
+}
+function a11ySet(k,v){ A11Y[k]=v; applyA11y(); }
 /* ---------- 시작 ---------- */
-buildMenus(); renderSite(); slideShow(0); route();
+buildMenus(); renderSite(); renderOrg(); applyA11y(); slideShow(0); route();
 try{ const id=sessionStorage.getItem(KEY+'-me'); const a=id&&DB.accounts.find(x=>x.id===id); if(a){ ME=a; CUR=a.branch==='all'?'b1':a.branch; showAdmin(); } }catch(e){}
 </script>
 </body>
