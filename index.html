@@ -1070,6 +1070,43 @@ html.a11y-dark .a11y{filter:invert(1) hue-rotate(180deg)}
 .cta{background:#f8f2e6;color:#5b4027;border:1px solid #e3d5bd;box-shadow:0 3px 10px rgba(122,90,58,.12)}
 .cta:hover{background:#f1e7d4;color:#4a331f}
 .cta svg{color:#8a6a45}
+
+/* 시설 소개 */
+.page .psec.fac{padding:110px 0 120px}
+.fac-head{text-align:center;margin-bottom:40px}
+.fac-head small{font-size:13px;font-weight:800;letter-spacing:.3em;color:#8a6a45}
+.fac-head h2{font-size:clamp(28px,3vw,40px);margin:10px 0 14px;color:#1f2a20}
+.fac-head p{margin:0;color:#4b504a;line-height:1.9}
+.fac-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+.fac-tabs button{border:1px solid #d9dfd4;background:#fff;border-radius:99px;padding:10px 22px;font-weight:700;color:#4b504a;cursor:pointer}
+.fac-tabs button.on{background:var(--g1);border-color:var(--g1);color:#fff}
+.fac-main{position:relative;margin:0 0 22px;border-radius:22px;overflow:hidden;cursor:pointer;box-shadow:0 14px 34px rgba(30,50,30,.14)}
+.fac-main img{display:block;width:100%;aspect-ratio:16/8;object-fit:cover;transition:transform .6s}
+.fac-main:hover img{transform:scale(1.03)}
+.fac-main figcaption{position:absolute;left:0;right:0;bottom:0;padding:60px 34px 28px;background:linear-gradient(180deg,transparent,rgba(15,30,18,.78));color:#fff}
+.fac-main b{display:block;font-size:clamp(20px,2vw,28px);margin-bottom:6px}
+.fac-main span{opacity:.92}
+.fac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.fac-grid figure{margin:0;background:#fff;border:1px solid #e6e3da;border-radius:18px;overflow:hidden;cursor:pointer;transition:box-shadow .3s}
+.fac-grid figure:hover{box-shadow:0 12px 28px rgba(30,50,30,.13)}
+.fac-grid .im{overflow:hidden}
+.fac-grid img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform .6s}
+.fac-grid figure:hover img{transform:scale(1.05)}
+.fac-grid figcaption{padding:16px 18px 20px}
+.fac-grid b{display:block;font-size:17px;color:#1f2a20;margin-bottom:4px}
+.fac-grid span{font-size:14px;color:#5b605a;line-height:1.6}
+.fac-empty{text-align:center;background:#fff;border:1px dashed #cfd8ca;border-radius:22px;padding:50px 20px}
+.fac-empty img{width:min(360px,80%);border-radius:14px;margin-bottom:16px}
+.fac-empty p{color:#4b504a;margin:0 0 18px}
+.fac-view img{display:block;width:100%;max-height:70vh;object-fit:contain;border-radius:12px;background:#111}
+.fv-cap{padding:14px 2px 0}
+.fv-cap b{display:block;font-size:19px;margin-bottom:4px}
+.fv-cap span{color:var(--muted)}
+@media (max-width:700px){.page .psec.fac{padding:60px 0 70px}.fac-main img{aspect-ratio:4/3}.fac-main figcaption{padding:40px 18px 16px}.fac-main span{display:none}}
+.fac-grid{grid-template-columns:repeat(6,1fr)}
+.fac-grid figure{grid-column:span 2}
+.fac-grid figure:nth-child(3n+1):nth-last-child(2),.fac-grid figure:nth-child(3n+2):nth-last-child(1){grid-column:span 3}
+@media (max-width:860px){.fac-grid{grid-template-columns:1fr 1fr}.fac-grid figure,.fac-grid figure:nth-child(n){grid-column:auto}}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1399,6 +1436,11 @@ td.l,th.l{text-align:left}
       </div>
     </div></section>
     <section class="psec" id="daycare-b1"><div class="wrap w"><h2>지점 안내</h2><p class="lead2">세 곳의 센터가 같은 돌봄 원칙으로 운영됩니다.</p><div id="branch-detail"></div></div></section>
+    <section class="psec fac" id="daycare-facility"><div class="wrap w">
+      <div class="fac-head"><small>FACILITY</small><h2>시설 소개</h2><p>밝고 넓은 공간, 안전한 동선, 재활 설비까지.<br>어르신이 편안하게 머무실 수 있도록 세심하게 꾸몄습니다.</p></div>
+      <div class="fac-tabs" id="fac-tabs"></div>
+      <div id="fac-body"></div>
+    </div></section>
     <section class="psec" id="daycare-program"><div class="wrap w">
       <h2>하루 일과 · 프로그램</h2><p class="lead2">평일 기준이며, 지점과 요일에 따라 다를 수 있습니다.</p>
       <div class="dflow" data-daily></div>
@@ -1684,7 +1726,7 @@ const fmtDate = d=>d.replace(/-/g,'.');
 /* ---------- 메뉴 구조 ---------- */
 const MENU = [
   {id:'about',    name:'기관소개',   sub:[['ceo','대표 인사말','숲과 함께, 더 건강하고 더 행복한 일상을 만들어 갑니다.'],['greeting','브랜드 스토리','어르신의 하루가 배움이 되고, 일상이 행복이 되는 곳.'],['vision','철학 · 미션 · 비전','편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임.'],['history','숲이 걸어온 길'],['status','기관 현황 및 오시는 길','주야간보호 3개 센터와 방문요양 서비스의 위치와 연락처를 안내합니다.']]},
-  {id:'daycare',  name:'주야간보호', sub:[['intro','서비스 소개'],['b1','지점 안내'],['program','하루 일과 · 프로그램']]},
+  {id:'daycare',  name:'주야간보호', sub:[['intro','서비스 소개'],['b1','지점 안내'],['facility','시설 소개','쾌적하고 안전한 공간에서 어르신의 하루를 함께합니다.'],['program','하루 일과 · 프로그램']]},
   {id:'homecare', name:'방문요양',   sub:[['intro','센터 소개'],['service','서비스 내용'],['process','이용 절차'],['recruit','요양보호사 채용']]},
   {id:'guide',    name:'이용안내',   sub:[['grade','장기요양등급 신청'],['process','이용 절차'],['cost','비용 안내'],['faq','자주 묻는 질문']]},
   {id:'news',     name:'알림마당',   sub:[['notice','공지사항'],['gallery','활동 갤러리']]},
@@ -2537,8 +2579,38 @@ async function inqSet(id,status){
   try{ const r=await inqApi({action:'update',pw:INQ_PW,id,status}); if(!r.ok) throw 0; const x=INQ_ROWS.find(r=>r.id===id); if(x) x.status=status; vInq(); toast(status==='처리완료'?'처리완료로 표시했습니다':'신규로 되돌렸습니다'); }
   catch(e){ toast('저장하지 못했습니다'); }
 }
+
+/* 시설 소개 */
+const FACILITY = {
+  b2:[
+    {img:'img/fac_b2_1.jpg',t:'프로그램실 · 식당',d:'넓은 테이블과 무대, 대형 TV를 갖춘 공간에서 식사와 인지·여가 프로그램을 함께합니다.'},
+    {img:'img/fac_b2_5.jpg',t:'휴게 라운지',d:'편안한 소파와 피아노가 있는 라운지에서 쉬며 음악 활동을 즐깁니다.'},
+    {img:'img/fac_b2_6.jpg',t:'소파 휴식 공간',d:'창이 넓어 밝은 공간에서 프로그램 사이사이 편안히 휴식합니다.'},
+    {img:'img/fac_b2_4.jpg',t:'보행 재활 공간',d:'천장 레일형 보행 보조 장비(워킹슬링)로 안전하게 걷기 훈련을 합니다.'},
+    {img:'img/fac_b2_2.jpg',t:'보행 훈련로 · 복도',d:'바닥 보행 트랙과 양쪽 안전 손잡이로 이동과 걷기 운동을 돕습니다.'},
+    {img:'img/fac_b2_3.jpg',t:'세면 공간 · 개인 사물함',d:'어르신 눈높이에 맞춘 세면대와 개인 사물함을 갖추었습니다.'},
+  ],
+  b1:[], b3:[]
+};
+let FAC_B='b2';
+function renderFacility(){
+  const tabs=document.getElementById('fac-tabs'); if(!tabs) return;
+  tabs.innerHTML=BR.map(b=>`<button class="${b===FAC_B?'on':''}" onclick="FAC_B='${b}';renderFacility()">${esc(DB.branches[b].name)}</button>`).join('');
+  const list=FACILITY[FAC_B]||[], x=DB.branches[FAC_B];
+  const body=document.getElementById('fac-body');
+  if(!list.length){ body.innerHTML=`<div class="fac-empty"><img src="${x.photo||B_PHOTO[FAC_B]}" alt=""><p><b>${esc(x.name)}</b> 시설 사진을 준비하고 있습니다.</p><a class="hbtn line" href="tel:${esc(x.tel)}" style="padding:10px 20px;font-size:15px">${ico('i-phone')}${esc(x.tel)} 방문 상담 문의</a></div>`; return; }
+  const [a,...rest]=list;
+  body.innerHTML=`<figure class="fac-main" onclick="viewFac(0)"><img src="${a.img}" alt="${esc(x.name)} ${esc(a.t)}"><figcaption><b>${esc(a.t)}</b><span>${esc(a.d)}</span></figcaption></figure>
+    <div class="fac-grid">${rest.map((p,i)=>`<figure onclick="viewFac(${i+1})"><div class="im"><img src="${p.img}" alt="${esc(x.name)} ${esc(p.t)}" loading="lazy"></div><figcaption><b>${esc(p.t)}</b><span>${esc(p.d)}</span></figcaption></figure>`).join('')}</div>`;
+  setupReveal('daycare-facility',[['.fac-main','zoom'],['.fac-grid figure','up',120]]); playReveal('daycare-facility');
+}
+function viewFac(i){
+  const list=FACILITY[FAC_B], p=list[i], n=list.length;
+  modal(`<div class="fac-view"><img src="${p.img}" alt=""><div class="fv-cap"><b>${esc(p.t)}</b><span>${esc(p.d)}</span></div>
+    <div class="actions"><button class="btn light" onclick="viewFac(${(i-1+n)%n})">◀ 이전</button><span style="margin:auto;color:var(--muted)">${i+1} / ${n}</span><button class="btn light" onclick="viewFac(${(i+1)%n})">다음 ▶</button><button class="btn" onclick="closeModal()">닫기</button></div></div>`, true);
+}
 /* ---------- 시작 ---------- */
-buildMenus(); renderSite(); renderOrg(); applyA11y(); slideShow(0); route();
+buildMenus(); renderSite(); renderOrg(); renderFacility(); applyA11y(); slideShow(0); route();
 try{ const id=sessionStorage.getItem(KEY+'-me'); const a=id&&DB.accounts.find(x=>x.id===id); if(a){ ME=a; CUR=a.branch==='all'?'b1':a.branch; showAdmin(); } }catch(e){}
 </script>
 </body>
