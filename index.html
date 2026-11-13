@@ -681,6 +681,11 @@ body:has(#pg-home.on) .foot3{display:none}
 .ceo-sign{text-align:right;margin-top:26px;font-size:16px;color:#4b504a}
 .ceo-sign strong{font-size:22px;color:#1f2a20;margin:0 4px}
 @media (max-width:860px){.ceo{grid-template-columns:1fr;gap:26px}.ceo-l{position:static;max-width:360px;margin:0 auto}.ceo-r blockquote{font-size:24px}}
+
+.psec.hide{display:none}
+.page .psec{min-height:calc(100vh - 260px);background:transparent!important;border-bottom:0}
+.subtabs a.on{color:var(--g1);border-bottom-color:var(--g1)}
+.acc .subs a.on{color:var(--g1);font-weight:800}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1298,10 +1303,25 @@ function showPage(page, anchor){
   $('#mnav').classList.remove('open');
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on', p.id==='pg-'+page));
   document.querySelectorAll('#gnb>li').forEach(li=>li.classList.toggle('on', li.dataset.p===page));
-  document.querySelectorAll('#acc>div').forEach(d=>{ d.classList.toggle('cur', d.dataset.p===page); if(d.dataset.p===page) d.classList.add('open'); });
+  document.querySelectorAll('#acc>div').forEach(d=>{ d.classList.toggle('cur', d.dataset.p===page); d.classList.toggle('open', d.dataset.p===page); });
   if(page==='home') startSlides(); else stopSlides();
+  if(page!=='home'){
+    // 서브메뉴 1개 = 1페이지
+    const pg=document.getElementById('pg-'+page), secs=[...pg.querySelectorAll('.psec')];
+    let cur=anchor&&document.getElementById(anchor);
+    if(!cur||!secs.includes(cur)) cur=secs[0];
+    secs.forEach(s=>s.classList.toggle('hide', s!==cur));
+    const m=MENU.find(x=>x.id===page), sub=m.sub.find(s=>page+'-'+s[0]===cur.id);
+    pg.querySelectorAll('.subtabs a').forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+cur.id));
+    pg.querySelector('.subhero .bc').textContent=`홈 › ${m.name}`+(sub?` › ${sub[1]}`:'');
+    pg.querySelector('.subhero h1').textContent=sub?sub[1]:m.name;
+    document.querySelectorAll('#acc .subs a').forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+cur.id));
+    document.title=(sub?sub[1]+' | ':'')+m.name+' | 숲 데이케어센터';
+    scrollTo(0,0); requestAnimationFrame(()=>scrollTo(0,0)); setTimeout(()=>scrollTo(0,0),30); return;
+  }
+  document.title='숲 데이케어센터 | 숲 · 더숲 · 한강숲';
   requestAnimationFrame(()=>{ const el=anchor&&document.getElementById(anchor);
-    if(el){ const y=el.getBoundingClientRect().top+scrollY-(page==='home'?80:130); scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
+    if(el){ const y=el.getBoundingClientRect().top+scrollY-80; scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
     else scrollTo(0,0); });
 }
 function goPage(p){ if(location.hash==='#'+p) route(); else location.hash=p; }
@@ -1397,7 +1417,6 @@ function renderSite(){
   $('#prog-photos').innerHTML = SEED_GALLERY.map(g=>`<figure onclick="viewGallery('${g.id}')"><div style="background-image:url('${g.photo}')"></div><figcaption><b>${esc(g.title)}</b><small>${esc(branchLabel(g.branch))}</small></figcaption></figure>`).join('');
   // 방문요양
   const h=DB.homecare;
-  $('#hc-title').textContent = h.name;
   $('#hc-detail').innerHTML = `<div class="bdetail"><div class="ph" style="${h.photo?`background-image:url('${h.photo}')`:`background:linear-gradient(135deg,#f8efdc,#efe0c0);display:grid;place-items:center`}">${h.photo?'':`<img src="${IMG.s4}" style="height:85%" alt="">`}</div><div>
     <span class="no">방문요양</span><h3>${esc(h.name)}</h3>
     <dl><dt>주소</dt><dd>${esc(h.addr)}</dd><dt>대표전화</dt><dd><a href="tel:${esc(h.tel)}" style="font-weight:800;color:var(--g1);text-decoration:none">${esc(h.tel)}</a></dd><dt>운영 시간</dt><dd>${esc(h.hours)}</dd><dt>서비스</dt><dd>방문요양 (장기요양 재가급여)</dd></dl>
