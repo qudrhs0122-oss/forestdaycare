@@ -929,6 +929,17 @@ body:has(#pg-home.on) .foot3{display:none}
   .timeline b{font-size:20px}
   #about-history .vision2{margin-top:60px;padding:36px 22px}
 }
+
+/* 슬라이드 효과 */
+.rv{opacity:0;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.up{transform:translateY(46px)}
+.rv.left{transform:translateX(-70px)}
+.rv.right{transform:translateX(70px)}
+.rv.zoom{transform:scale(.94) translateY(30px)}
+.rv.grow{transform:scaleX(0);transform-origin:center}
+.rv.fade{transform:none}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none!important}}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1576,6 +1587,7 @@ function showPage(page, anchor){
     document.querySelectorAll('#acc .subs a').forEach(a=>a.classList.toggle('on', a.getAttribute('href')==='#'+cur.id));
     document.title=(sub?sub[1]+' | ':'')+m.name+' | 숲 데이케어센터';
     setTimeout(updateTL,250);
+    playReveal(cur.id);
     scrollTo(0,0); requestAnimationFrame(()=>scrollTo(0,0)); setTimeout(()=>scrollTo(0,0),30); setTimeout(()=>scrollTo(0,0),200); return;
   }
   document.title='숲 데이케어센터 | 숲 · 더숲 · 한강숲';
@@ -2241,6 +2253,22 @@ function updateTL(){
     li.classList.toggle('lit', y<line || i===0); });
 }
 addEventListener('scroll',updateTL,{passive:true}); addEventListener('resize',updateTL);
+
+/* 스크롤 슬라이드 효과 (브랜드 스토리) */
+const RV_IO = ('IntersectionObserver' in window) ? new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); RV_IO.unobserve(e.target); } }),{threshold:.18,rootMargin:'0px 0px -6% 0px'}) : null;
+function setupReveal(id, rules){
+  const sec=document.getElementById(id); if(!sec) return;
+  rules.forEach(([sel,cls,stagger])=>sec.querySelectorAll(sel).forEach((el,i)=>{ el.classList.add('rv',cls); if(stagger) el.style.transitionDelay=(i*stagger)+'ms'; }));
+}
+function playReveal(id){
+  const sec=document.getElementById(id); if(!sec) return;
+  sec.querySelectorAll('.rv').forEach(el=>{ el.classList.remove('in'); if(RV_IO) RV_IO.observe(el); else el.classList.add('in'); });
+}
+setupReveal('about-greeting',[
+  ['.sq-title','up'],['.bs-photo','zoom'],['.bs-body h3','up'],['.bar2','grow'],
+  ['.bs-body>p:not(.big-quote)','left',0],['.vals4.circ>div','up',150],['.big-quote','up'],['.foot-scene','fade']
+]);
+document.querySelectorAll('#about-greeting .bs-body>p:not(.big-quote)').forEach((p,i)=>{ if(i%2) {p.classList.remove('left');p.classList.add('right');} });
 /* ---------- 시작 ---------- */
 buildMenus(); renderSite(); slideShow(0); route();
 try{ const id=sessionStorage.getItem(KEY+'-me'); const a=id&&DB.accounts.find(x=>x.id===id); if(a){ ME=a; CUR=a.branch==='all'?'b1':a.branch; showAdmin(); } }catch(e){}
