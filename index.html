@@ -846,6 +846,53 @@ body:has(#pg-home.on) .foot3{display:none}
   .big-quote.small{margin-bottom:60px}
 }
 @media (min-width:1101px){.cg2-intro .sq-title{white-space:nowrap;font-size:clamp(28px,2.6vw,40px)}}
+
+/* 철학·미션·비전 v2 */
+.page .psec.pv{position:relative;overflow:hidden;padding:0;min-height:0;background:linear-gradient(180deg,#fbfcf8 0%,#fff 40%,#f4f8f0 100%)!important}
+.pv-l{position:absolute;left:0;top:0;width:min(30%,330px);pointer-events:none}
+.pv-r{position:absolute;right:0;top:0;width:min(22%,240px);pointer-events:none;-webkit-mask-image:radial-gradient(ellipse at 100% 0%,#000 45%,transparent 75%);mask-image:radial-gradient(ellipse at 100% 0%,#000 45%,transparent 75%)}
+.pv-l{-webkit-mask-image:radial-gradient(ellipse at 0% 0%,#000 55%,transparent 80%);mask-image:radial-gradient(ellipse at 0% 0%,#000 55%,transparent 80%)}
+.pv-in{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:120px 30px 40px}
+.pv-label{display:flex;align-items:center;gap:30px;margin-bottom:60px}
+.pv-label i{flex:1;height:1px;background:#9fb894}
+.pv-label span{font-size:15px;font-weight:800;letter-spacing:.35em;color:#2e5a32}
+.pv-phil{display:grid;grid-template-columns:repeat(4,1fr)}
+.pv-phil>div{text-align:center;border-left:1px solid #dbe4d4}
+.pv-phil>div:first-child{border-left:0}
+.pv-phil .c{display:grid;place-items:center;width:130px;height:130px;border-radius:50%;background:#eef3e6;margin:0 auto 18px;color:#4f7d43}
+.pv-phil svg{width:72px;height:72px}
+.pv-phil small{display:block;font-size:18px;color:#2b2f2b}
+.pv-phil b{display:block;font-size:30px;color:#24502b;margin-top:2px}
+.pv-wave{display:block;width:100%;height:90px;margin-top:40px}
+.pv-cards{background:#f4f8f0;padding:90px 30px 60px}
+.pv-card{position:relative;max-width:880px;margin:0 auto 90px;border-radius:26px;padding:56px 60px 50px;overflow:visible}
+.pv-card .tag{position:absolute;left:60px;top:-20px;background:#fff;border:1.5px solid #6a9a52;border-radius:99px;padding:6px 32px;font-size:15px;font-weight:800;letter-spacing:.22em;color:#2e5a32}
+.pv-card p{margin:0;font-size:clamp(22px,2.4vw,32px);font-weight:800;line-height:1.55;letter-spacing:-.03em;position:relative;z-index:1}
+.pv-card.m{background:#f6f1e6;color:#1f2a20}
+.pv-card.m img{position:absolute;right:50px;top:50%;transform:translateY(-50%);width:140px}
+.pv-card.v{background:linear-gradient(100deg,#2f6233 0%,#3f7a40 45%,#6e9b5e 75%,#9cbb84 100%);color:#fff;overflow:hidden;margin-bottom:40px}
+.pv-card.v .tag{top:18px;left:60px;background:#2f6233;color:#fff;border-color:#cfe0c4;position:relative;display:inline-block;margin-bottom:22px;top:auto;left:auto}
+.pv-card.v{padding-top:34px}
+.pv-card.v p{font-size:clamp(19px,2vw,27px);font-weight:700;max-width:72%}
+.pv-card.v .tree{position:absolute;right:0;top:0;bottom:0;width:38%;background:right center/cover no-repeat;-webkit-mask-image:linear-gradient(90deg,transparent,#000 45%);mask-image:linear-gradient(90deg,transparent,#000 45%)}
+.pv .foot-scene{height:220px;margin-top:-20px}
+@media (max-width:860px){
+  .pv-in{padding:70px 20px 20px}
+  .pv-label{gap:14px;margin-bottom:36px}
+  .pv-label span{letter-spacing:.2em;font-size:13px}
+  .pv-phil{grid-template-columns:1fr 1fr;row-gap:36px}
+  .pv-phil>div:nth-child(3){border-left:0}
+  .pv-phil .c{width:100px;height:100px}
+  .pv-phil svg{width:54px;height:54px}
+  .pv-phil b{font-size:24px}
+  .pv-cards{padding:60px 18px 30px}
+  .pv-card{padding:44px 26px 34px;margin-bottom:60px}
+  .pv-card .tag{left:26px}
+  .pv-card.m img{width:80px;right:14px;opacity:.6}
+  .pv-card.v p{max-width:100%}
+  .pv-card.v .tree{width:55%;opacity:.45}
+  .pv-l,.pv-r{width:40%;opacity:.7}
+}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1113,20 +1160,24 @@ td.l,th.l{text-align:left}
       </div>
       <div class="foot-scene" style="background-image:url('img/bs_forest.jpg')"></div>
     </section>
-    <section class="psec" id="about-vision"><div class="wrap w">
-      <h2>철학 · 미션 · 비전</h2><p class="lead2">PHILOSOPHY · MISSION · VISION</p>
-      <div class="phil-h"><span>OUR PHILOSOPHY</span></div>
-      <div class="vals phil">
-        <div class="val"><small>편의보다</small><h4>존엄</h4><p>어르신 한 분 한 분의 삶과 선택을 먼저 존중합니다</p></div>
-        <div class="val"><small>속도보다</small><h4>안전</h4><p>송영부터 귀가까지 서두르지 않고 안전을 지킵니다</p></div>
-        <div class="val"><small>규정보다</small><h4>사람</h4><p>틀에 맞추기보다 어르신의 필요를 먼저 봅니다</p></div>
-        <div class="val"><small>변명보다</small><h4>책임</h4><p>맡겨 주신 하루에 끝까지 책임을 다합니다</p></div>
+    <section class="psec pv" id="about-vision">
+      <img class="pv-l" src="img/pv_leafL.png" alt=""><img class="pv-r" src="img/pv_leafR.png" alt="">
+      <div class="pv-in">
+        <div class="pv-label"><i></i><span>OUR PHILOSOPHY</span><i></i></div>
+        <div class="pv-phil">
+          <div><span class="c"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 11c-2-4-9-3-9 2 0 4 5 7 9 10 4-3 9-6 9-10 0-5-7-6-9-2z"/><path d="M6 27c3 0 5 2 7 4l4 4h14c3 0 3 4 0 4H21M13 31v9H6M31 35l8-5c2-1 4 1 2 3l-9 7H13"/></g></svg></span><small>편의보다</small><b>존엄</b></div>
+          <div><span class="c"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l14 5v11c0 10-6 17-14 20-8-3-14-10-14-20V11z"/><path d="M18 24l5 5 8-9"/></g></svg></span><small>속도보다</small><b>안전</b></div>
+          <div><span class="c"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="24" cy="15" r="5"/><circle cx="12" cy="18" r="4"/><circle cx="36" cy="18" r="4"/><path d="M15 36c0-6 4-10 9-10s9 4 9 10zM5 34c0-4 3-8 7-8 2 0 3 .5 4 1M43 34c0-4-3-8-7-8-2 0-3 .5-4 1"/></g></svg></span><small>규정보다</small><b>사람</b></div>
+          <div><span class="c"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M28 24V14M28 18c-1-5-5-7-10-6 1 5 5 7 10 6zM28 16c1-5 5-7 10-6-1 5-5 7-10 6z"/><path d="M6 30c3 0 5 2 7 4l4 3h12c3 0 3 4 0 4H19M13 34v7H6M29 37l9-5c2-1 4 1 2 3l-10 7H13"/></g></svg></span><small>변명보다</small><b>책임</b></div>
+        </div>
       </div>
-      <div class="mv">
-        <div class="mvc"><span>OUR MISSION</span><p>어르신의 하루에 배움과 건강,<br>행복을 더합니다.</p></div>
-        <div class="mvc dark"><span>OUR VISION</span><p>대한민국 시니어의 두 번째 인생을 함께하는<br>평생 배움과 돌봄의 공간</p></div>
+      <svg class="pv-wave" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C260 90 520 90 760 50 S1080 0 1200 20 V90 H0Z" fill="#f4f8f0"/><path d="M0 52 C260 100 540 96 780 58 S1090 10 1200 30" fill="none" stroke="#dbe8d2" stroke-width="2"/></svg>
+      <div class="pv-cards">
+        <div class="pv-card m"><span class="tag">OUR MISSION</span><p>어르신의 하루에<br>배움과 건강, 행복을 더합니다.</p><img src="img/pv_sprig.png" alt=""></div>
+        <div class="pv-card v"><span class="tag">OUR VISION</span><p>대한민국 시니어의 두 번째 인생을 함께하는<br>평생 배움과 돌봄의 공간</p><div class="tree" style="background-image:url('img/pv_tree.jpg')"></div></div>
       </div>
-    </div></section>
+      <div class="foot-scene" style="background-image:url('img/pv_forest.jpg')"></div>
+    </section>
     <section class="psec" id="about-history"><div class="wrap w">
       <h2>숲이 걸어온 길</h2><p class="lead2">OUR HISTORY · SINCE 2018 · 어르신의 두 번째 학교, 숲</p>
       <div class="hist">
@@ -1440,7 +1491,7 @@ const fmtDate = d=>d.replace(/-/g,'.');
 
 /* ---------- 메뉴 구조 ---------- */
 const MENU = [
-  {id:'about',    name:'기관소개',   sub:[['ceo','대표 인사말','숲과 함께, 더 건강하고 더 행복한 일상을 만들어 갑니다.'],['greeting','브랜드 스토리','어르신의 하루가 배움이 되고, 일상이 행복이 되는 곳.'],['vision','철학 · 미션 · 비전'],['history','숲이 걸어온 길'],['status','기관 현황'],['map','오시는 길']]},
+  {id:'about',    name:'기관소개',   sub:[['ceo','대표 인사말','숲과 함께, 더 건강하고 더 행복한 일상을 만들어 갑니다.'],['greeting','브랜드 스토리','어르신의 하루가 배움이 되고, 일상이 행복이 되는 곳.'],['vision','철학 · 미션 · 비전','편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임.'],['history','숲이 걸어온 길'],['status','기관 현황'],['map','오시는 길']]},
   {id:'daycare',  name:'주야간보호', sub:[['intro','서비스 소개'],['b1','지점 안내'],['program','하루 일과 · 프로그램']]},
   {id:'homecare', name:'방문요양',   sub:[['intro','센터 소개'],['service','서비스 내용'],['process','이용 절차'],['recruit','요양보호사 채용']]},
   {id:'guide',    name:'이용안내',   sub:[['grade','장기요양등급 신청'],['process','이용 절차'],['cost','비용 안내'],['faq','자주 묻는 질문']]},
