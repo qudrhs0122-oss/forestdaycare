@@ -1106,6 +1106,13 @@ html.a11y-dark .a11y{filter:invert(1) hue-rotate(180deg)}
 .fac-grid figcaption{padding:16px 18px 20px}
 .fac-grid b{display:block;font-size:17px;color:#1f2a20;margin-bottom:4px}
 .fac-grid span{font-size:14px;color:#5b605a;line-height:1.6}
+.fac-main img{transition:transform .6s,opacity .45s}.fac-main img.fade{opacity:0}
+.fac-bar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:rgba(255,255,255,.85);transform-origin:left;transform:scaleX(0);animation:facbar 5s linear forwards;z-index:2}
+@keyframes facbar{to{transform:scaleX(1)}}
+.fac-grid figure.on{border-color:var(--g1);box-shadow:0 0 0 2px var(--g1),0 12px 28px rgba(30,50,30,.13)}
+.fac-grid figure:not(.on) img{filter:saturate(.85) brightness(.97)}
+#fac-body.fac-in{animation:facin .7s ease}
+@keyframes facin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .fac-empty{text-align:center;background:#fff;border:1px dashed #cfd8ca;border-radius:22px;padding:50px 20px}
 .fac-empty img{width:min(360px,80%);border-radius:14px;margin-bottom:16px}
 .fac-empty p{color:#4b504a;margin:0 0 18px}
@@ -3041,18 +3048,39 @@ const FACILITY = {
     {img:'img/fac_b1_5.jpg?v=2',t:'식당 · 점심 식사',d:'밝은 창가 식당에서 균형 잡힌 점심을 함께 드십니다.'},
   ]
 };
-let FAC_B='b2';
-function renderFacility(){
+let FAC_B='b2', FAC_I=0, FAC_T=null, FAC_HOLD=false;
+function renderFacility(auto){
   const tabs=document.getElementById('fac-tabs'); if(!tabs) return;
-  tabs.innerHTML=BR.map(b=>`<button class="${b===FAC_B?'on':''}" onclick="FAC_B='${b}';renderFacility()">${esc(DB.branches[b].name)}</button>`).join('');
+  tabs.innerHTML=BR.map(b=>`<button class="${b===FAC_B?'on':''}" onclick="FAC_B='${b}';FAC_I=0;renderFacility()">${esc(DB.branches[b].name)}</button>`).join('');
   const list=FACILITY[FAC_B]||[], x=DB.branches[FAC_B];
   const body=document.getElementById('fac-body');
   const fb=badge(FAC_B)?`<div style="text-align:center;margin:-14px 0 22px">${badge(FAC_B)}</div>`:'';
-  if(!list.length){ body.innerHTML=`<div class="fac-empty"><img src="${x.photo||B_PHOTO[FAC_B]}" alt=""><p><b>${esc(x.name)}</b> 시설 사진을 준비하고 있습니다.</p><a class="hbtn line" href="tel:${esc(x.tel)}" style="padding:10px 20px;font-size:15px">${ico('i-phone')}${esc(x.tel)} 방문 상담 문의</a></div>`; return; }
-  const [a,...rest]=list;
-  body.innerHTML=fb+`<figure class="fac-main" onclick="viewFac(0)"><img src="${a.img}" alt="${esc(x.name)} ${esc(a.t)}"><figcaption><b>${esc(a.t)}</b><span>${esc(a.d)}</span></figcaption></figure>
-    <div class="fac-grid">${rest.map((p,i)=>`<figure onclick="viewFac(${i+1})"><div class="im"><img src="${p.img}" alt="${esc(x.name)} ${esc(p.t)}"></div><figcaption><b>${esc(p.t)}</b><span>${esc(p.d)}</span></figcaption></figure>`).join('')}</div>`;
-  setupReveal('daycare-facility',[['.fac-main','zoom'],['.fac-grid figure','up',120]]); playReveal('daycare-facility');
+  if(!list.length){ body.innerHTML=`<div class="fac-empty"><img src="${x.photo||B_PHOTO[FAC_B]}" alt=""><p><b>${esc(x.name)}</b> 시설 사진을 준비하고 있습니다.</p><a class="hbtn line" href="tel:${esc(x.tel)}" style="padding:10px 20px;font-size:15px">${ico('i-phone')}${esc(x.tel)} 방문 상담 문의</a></div>`; facAuto(); return; }
+  FAC_I=Math.min(FAC_I,list.length-1); const a=list[FAC_I];
+  body.innerHTML=fb+`<figure class="fac-main" onclick="viewFac(FAC_I)" onmouseenter="FAC_HOLD=true" onmouseleave="FAC_HOLD=false"><img id="fac-mimg" src="${a.img}" alt="${esc(x.name)} ${esc(a.t)}"><figcaption><b id="fac-mt">${esc(a.t)}</b><span id="fac-md">${esc(a.d)}</span></figcaption><i class="fac-bar" id="fac-bar"></i></figure>
+    <div class="fac-grid">${list.map((p,i)=>`<figure class="${i===FAC_I?'on':''}" onclick="facShow(${i})"><div class="im"><img src="${p.img}" alt="${esc(x.name)} ${esc(p.t)}"></div><figcaption><b>${esc(p.t)}</b><span>${esc(p.d)}</span></figcaption></figure>`).join('')}</div>`;
+  if(auto){ body.classList.remove('fac-in'); void body.offsetWidth; body.classList.add('fac-in'); }
+  else { setupReveal('daycare-facility',[['.fac-main','zoom'],['.fac-grid figure','up',120]]); playReveal('daycare-facility'); }
+  facBar(); facAuto();
+}
+function facBar(){ const b=document.getElementById('fac-bar'); if(!b) return; b.style.animation='none'; void b.offsetWidth; b.style.animation=''; }
+function facShow(i){
+  const list=FACILITY[FAC_B]||[]; if(!list.length) return; FAC_I=(i+list.length)%list.length; const p=list[FAC_I];
+  const im=document.getElementById('fac-mimg'); if(!im){ renderFacility(true); return; }
+  im.classList.add('fade');
+  setTimeout(()=>{ im.src=p.img; im.alt=DB.branches[FAC_B].name+' '+p.t; document.getElementById('fac-mt').textContent=p.t; document.getElementById('fac-md').textContent=p.d;
+    const done=()=>im.classList.remove('fade'); if(im.complete) done(); else { im.onload=done; setTimeout(done,800); } },450);
+  document.querySelectorAll('#fac-body .fac-grid figure').forEach((f,k)=>f.classList.toggle('on',k===FAC_I));
+  facBar(); facAuto();
+}
+function facAuto(){
+  clearInterval(FAC_T);
+  FAC_T=setInterval(()=>{
+    const sec=document.getElementById('daycare-facility'); if(!sec||!sec.offsetParent||FAC_HOLD||document.hidden||document.querySelector('#modal-root .modal-bg')) return;
+    const list=FACILITY[FAC_B]||[];
+    if(FAC_I<list.length-1) facShow(FAC_I+1);
+    else { FAC_B=BR[(BR.indexOf(FAC_B)+1)%BR.length]; FAC_I=0; renderFacility(true); }
+  },5000);
 }
 function viewFac(i){
   const list=FACILITY[FAC_B], p=list[i], n=list.length;
