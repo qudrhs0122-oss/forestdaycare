@@ -1970,10 +1970,7 @@ td.l,th.l{text-align:left}
     <div class="logo"><svg viewBox="0 0 40 40" width="28"><circle cx="20" cy="20" r="19" fill="#fff"/><path d="M20 8l-8 12h5l-6 9h18l-6-9h5z" fill="#2f6b4f"/></svg>관리자</div>
     <div class="who"><b id="who-branch"></b><span id="who-id"></span><select id="branch-switch" class="hidden" onchange="switchBranch(this.value)"></select></div>
     <nav class="menu">
-      <button data-v="dash">🏠 대시보드</button>
-      <button data-v="seniors">👵 어르신 관리</button>
-      <button data-v="staff">🗓️ 근무일정표</button>
-      <button data-v="transport">🚐 송영표</button>
+      <button data-v="sy">🚐 송영표 관리시스템</button>
       <button data-v="inq">📩 상담 문의 <span id="inq-badge" class="tag" style="display:none;background:#e74c3c;color:#fff;margin-left:auto"></span></button>
       <button data-v="web">🌐 홈페이지 관리</button>
       <button data-v="settings">⚙️ 설정</button>
@@ -2001,6 +1998,8 @@ td.l,th.l{text-align:left}
 <div id="modal-root"></div>
 <div id="print-area"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
 /* =========================================================
    데이터 저장소 (현재: 브라우저 저장소 / 추후 서버 DB로 교체)
@@ -2310,7 +2309,17 @@ function viewGallery(id){ const g=allGallery().find(x=>x.id===id); if(!g) return
 /* =========================================================
    로그인
    ========================================================= */
-let ME = null, CUR = 'b1', VIEW = 'dash';
+let ME = null, CUR = 'b1', VIEW = 'sy';
+/* 송영표 관리시스템(Firebase)과 같은 계정으로 로그인 */
+const FB_CFG={apiKey:"AIzaSyAy4aWXxyXD6tHEF0kt29sV_yCL8eZIoAY",authDomain:"hangang-songyeong.firebaseapp.com",projectId:"hangang-songyeong",storageBucket:"hangang-songyeong.firebasestorage.app",messagingSenderId:"459693506148",appId:"1:459693506148:web:11d683ebac693e5c372971"};
+const FB_DOMAIN='hangangsup.app';
+const FB_IDS={
+  supdc0301:{branch:'all', home:'b3', name:'한강숲 · 통합 관리자'},
+  supdc0801:{branch:'b2', name:'더숲 관리자'},
+  supdc0420:{branch:'b1', name:'숲 관리자'}
+};
+let FBA=null; try{ firebase.initializeApp(FB_CFG); FBA=firebase.auth(); FBA.setPersistence(firebase.auth.Auth.Persistence.LOCAL); }catch(e){ console.warn(e); }
+function meFrom(email){ const id=(email||'').split('@')[0]; const m=FB_IDS[id]; return m?{id,...m}:null; }
 function openLogin(){
   modal(`<h3>관리자 로그인</h3>
     <label class="field"><span>아이디</span><input id="lg-id" autocomplete="username"></label>
@@ -2321,16 +2330,20 @@ function openLogin(){
 }
 async function sha256(s){ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
 async function doLogin(){
-  const id=$('#lg-id').value.trim(), pw=$('#lg-pw').value;
-  let h=''; try{ h=await sha256(pw); }catch(e){}
-  const a=DB.accounts.find(x=>x.id===id && ((x.pw && x.pw===pw) || (x.pwh && x.pwh===h)));
-  if(a && a.branch==='all'){ try{ sessionStorage.setItem('sup-inq-pw', pw); }catch(e){} INQ_PW=pw; }
-  if(!a){ $('#lg-err').textContent='아이디 또는 비밀번호가 올바르지 않습니다.'; return; }
-  ME=a; CUR = a.branch==='all' ? 'b1' : a.branch;
-  try{ sessionStorage.setItem(KEY+'-me', a.id); }catch(e){}
+  const id=$('#lg-id').value.trim().toLowerCase(), pw=$('#lg-pw').value;
+  const err=m=>$('#lg-err').textContent=m;
+  if(!FB_IDS[id]){ err('아이디 또는 비밀번호가 올바르지 않습니다.'); return; }
+  if(!FBA){ err('로그인 서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.'); return; }
+  err('로그인 중…');
+  try{ await FBA.signInWithEmailAndPassword(id+'@'+FB_DOMAIN, pw); }
+  catch(e){ err(/network/.test(e.code||'')?'인터넷 연결을 확인해 주세요.':'아이디 또는 비밀번호가 올바르지 않습니다.'); return; }
+  ME=meFrom(id+'@'+FB_DOMAIN);
+  if(ME.branch==='all'){ try{ sessionStorage.setItem('sup-inq-pw', pw); }catch(e){} INQ_PW=pw; }
+  CUR = ME.branch==='all' ? ME.home : ME.branch; VIEW='sy';
+  try{ sessionStorage.setItem(KEY+'-me', ME.id); }catch(e){}
   closeModal(); showAdmin();
 }
-function logout(){ ME=null; INQ_PW=''; try{sessionStorage.removeItem(KEY+'-me');sessionStorage.removeItem('sup-inq-pw')}catch(e){}; showSite(); }
+function logout(){ try{FBA&&FBA.signOut()}catch(e){} ME=null; INQ_PW=''; try{sessionStorage.removeItem(KEY+'-me');sessionStorage.removeItem('sup-inq-pw')}catch(e){}; showSite(); }
 function showSite(){ $('#admin').classList.add('hidden'); $('#site').classList.remove('hidden'); renderSite(); renderOrg(); route(); }
 function showAdmin(){
   if(!ME){ openLogin(); return; }
@@ -2349,7 +2362,7 @@ function go(v){
   VIEW=v;
   document.querySelectorAll('.menu button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
   $('#who-branch').textContent = DB.branches[CUR].no+' '+DB.branches[CUR].name;
-  ({dash:vDash, seniors:vSeniors, staff:vStaff, transport:vTransport, settings:vSettings, web:vWeb, inq:vInq})[v]();
+  ({sy:vSy, dash:vSy, seniors:vSy, staff:vSy, transport:vSy, settings:vSettings, web:vWeb, inq:vInq})[v]();
   window.scrollTo(0,0);
 }
 
@@ -2368,6 +2381,11 @@ function staffName(id){ return ST().find(s=>s.id===id)?.name || ''; }
 /* =========================================================
    대시보드
    ========================================================= */
+function vSy(){
+  $('#panel').innerHTML=`<div class="ph"><div><h2>송영표 관리시스템</h2><div class="sub">로그인한 계정의 송영표 · 어르신 · 직원 자료가 그대로 열립니다</div></div>
+    <a class="btn light" href="/songyeong/" target="_blank" rel="noopener">새 창으로 크게 보기</a></div>
+    <iframe id="sy-frame" src="/songyeong/" title="송영표 관리시스템" style="width:100%;height:calc(100vh - 140px);min-height:560px;border:0;border-radius:14px;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.08)"></iframe>`;
+}
 function vDash(){
   const d=today(), att=attending(d);
   const working=ST().filter(s=>!isOff(s.id,d));
@@ -2658,7 +2676,8 @@ function printTransport(){
 /* =========================================================
    설정 (지점 정보 · 차량 · 계정 · 백업)
    ========================================================= */
-function vSettings(){
+function vSettings(){ vSettings0(); $('#panel').querySelectorAll('.box').forEach((b,i)=>{ if(i>1) b.remove(); }); }
+function vSettings0(){
   const b=DB.branches[CUR];
   const acc=DB.accounts.find(a=>a.id===ME.id);
   $('#panel').innerHTML=`
@@ -2681,6 +2700,7 @@ function vSettings(){
         <label class="field"><span>운영 시간</span><input id="b-hours" value="${esc(b.hours)}"></label>
       </div>
       <button class="btn" onclick="saveBranch()">저장</button></div>
+    <div class="box"><h4>로그인 계정</h4><p style="margin:0;line-height:1.8;color:#555">관리자 로그인은 <b>송영표 관리시스템과 같은 아이디 · 비밀번호</b>를 사용합니다.<br>숲 <b>supdc0420</b> · 더숲 <b>supdc0801</b> · 한강숲(통합) <b>supdc0301</b><br>비밀번호를 바꾸면 홈페이지 관리자와 송영표 시스템에 함께 적용됩니다.</p></div>
 
     <div class="box"><h4>차량 관리</h4>
       <div class="tbl-wrap"><table><tr><th>차량명</th><th>차량번호</th><th>정원(어르신)</th><th>보조자 탑승</th><th></th></tr>
@@ -3150,7 +3170,8 @@ function hcpAuto(){ clearInterval(HCP_T); HCP_T=setInterval(()=>{const p=documen
 ]));
 /* ---------- 시작 ---------- */
 buildMenus(); renderSite(); renderOrg(); renderFacility(); pcBuild(); pcAuto(); dyBuild(); dyAuto(); hcpBuild(); hcpAuto(); applyA11y(); slideShow(0); route();
-try{ const id=sessionStorage.getItem(KEY+'-me'); const a=id&&DB.accounts.find(x=>x.id===id); if(a){ ME=a; CUR=a.branch==='all'?'b1':a.branch; showAdmin(); } }catch(e){}
+if(FBA) FBA.onAuthStateChanged(u=>{ if(!u||ME) return; let want=''; try{ want=sessionStorage.getItem(KEY+'-me')||''; }catch(e){}
+  const m=meFrom(u.email); if(m && want===m.id){ ME=m; CUR=m.branch==='all'?m.home:m.branch; try{INQ_PW=sessionStorage.getItem('sup-inq-pw')||INQ_PW}catch(e){} showAdmin(); } });
 </script>
 </body>
 </html>

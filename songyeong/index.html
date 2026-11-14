@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>송영표 관리시스템</title></head>
+<body style="font-family:sans-serif;color:#667;display:flex;align-items:center;justify-content:center;min-height:90vh">송영표 관리시스템을 불러오는 중…
+<script>
+/* 원본(hangangsup.github.io/songyeong)을 그대로 불러와 이 주소(forestdaycare.co.kr)에서 실행합니다.
+   같은 주소에서 실행되므로 홈페이지 관리자 로그인 상태가 그대로 이어집니다. 원본을 고치면 여기도 자동 반영됩니다. */
+(function(){
+  var SRC='https://hangangsup.github.io/songyeong/';
+  fetch(SRC+'?t='+Date.now(),{cache:'no-store'}).then(function(r){ if(!r.ok) throw r.status; return r.text(); }).then(function(h){
+    h=h.replace(/(<script[^>]+src=")(?!https?:|\/\/)([^"]+)"/g,function(_,a,b){ return a+SRC+b+'"'; })
+       .replace(/(<link[^>]+href=")(?!https?:|\/\/|#)([^"]+)"/g,function(_,a,b){ return a+SRC+b+'"'; });
+    document.open(); document.write(h); document.close();
+  }).catch(function(){
+    document.body.innerHTML='<p>불러오지 못했습니다. <a href="'+SRC+'">송영표 관리시스템 바로 열기</a></p>';
+  });
+})();
+</script></body></html>
