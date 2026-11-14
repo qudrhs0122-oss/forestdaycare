@@ -426,6 +426,35 @@ input,select,textarea{font:inherit;font-size:16px}
 .flow .st b{display:block;color:var(--gold);font-size:12px;letter-spacing:.1em;margin-bottom:6px}
 .flow .st h4{margin:0 0 6px;font-size:18px}
 .flow .st p{margin:0;font-size:14px;color:#5b605a}
+/* 이용안내 단계 슬라이더 */
+.gsl{margin:6px 0 8px}
+.gsl-nav{position:relative;display:flex;justify-content:space-between;margin:0 6% 26px}
+.gsl-line{position:absolute;left:22px;right:22px;top:21px;height:3px;background:#e4e8df;border-radius:3px}
+.gsl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--g1);border-radius:3px;transition:width .7s cubic-bezier(.2,.7,.2,1)}
+.gsl-nav button{position:relative;z-index:1;background:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0;width:44px;font:inherit}
+.gsl-nav i{font-style:normal;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid #dfe5da;color:#9aa596;font-weight:800;transition:.4s}
+.gsl-nav span{font-size:13px;color:#8a9286;white-space:nowrap;font-weight:700;transition:.4s}
+.gsl-nav button.done i{border-color:var(--g1);color:var(--g1)}
+.gsl-nav button.on i{background:var(--g1);border-color:var(--g1);color:#fff;transform:scale(1.12);box-shadow:0 6px 16px rgba(47,107,79,.3)}
+.gsl-nav button.on span{color:var(--g1)}
+.gsl-view{overflow:hidden;border-radius:22px;box-shadow:0 14px 34px rgba(30,50,30,.1)}
+.gsl-track{display:flex;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.gsl-card{flex:0 0 100%;display:flex;align-items:center;gap:36px;padding:44px 52px;min-height:200px;background:linear-gradient(120deg,#f4f7ef 0%,#fff 60%);position:relative;overflow:hidden}
+.gsl-card .gsl-num{font-size:110px;line-height:.9;font-weight:900;color:var(--g1);opacity:.14;letter-spacing:-.04em;flex:0 0 auto}
+.gsl-card b{display:inline-block;color:#fff;background:var(--gold);font-size:12px;letter-spacing:.14em;padding:5px 12px;border-radius:99px;margin-bottom:12px}
+.gsl-card h4{margin:0 0 10px;font-size:clamp(22px,2.2vw,30px);color:#1f2a20}
+.gsl-card p{margin:0;font-size:17px;color:#4b504a;line-height:1.7}
+.gsl-card .gsl-txt>*{opacity:0;transform:translateX(40px);transition:opacity .7s .25s,transform .7s .25s cubic-bezier(.2,.7,.2,1)}
+.gsl-card.on .gsl-txt>*{opacity:1;transform:none}
+.gsl-card.on .gsl-txt>h4{transition-delay:.38s}.gsl-card.on .gsl-txt>p{transition-delay:.5s}
+.gsl-card::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(47,107,79,.10),transparent 70%)}
+.gsl-ctrl{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;color:#7a8276;font-weight:700}
+.gsl-ctrl button{width:40px;height:40px;border-radius:50%;border:1px solid #dfe5da;background:#fff;cursor:pointer;font-size:20px;color:var(--g1)}
+.gsl-ctrl button:hover{background:var(--g1);color:#fff}
+.gsl-prog{display:block;height:3px;background:var(--g1);width:0}
+.gsl-prog.run{animation:gslp 4.5s linear forwards}
+@keyframes gslp{to{width:100%}}
+@media (max-width:700px){.gsl-nav{margin:0 0 20px}.gsl-nav span{display:none}.gsl-card{flex-direction:column;align-items:flex-start;gap:6px;padding:30px 24px}.gsl-card .gsl-num{font-size:64px}}
 .costt td.n{font-weight:800;color:var(--g1)}
 .note{font-size:13.5px;color:#7a7f78;margin-top:10px}
 .faq details{background:#fff;border:1px solid #e6e3da;border-radius:12px;margin-bottom:10px}
@@ -2906,6 +2935,45 @@ setupReveal('about-status',[
   ['.og-head','up'],['.og-table','up'],['.og-loc-h','up'],['.og-foot p','up'],['.og-foot i','grow']
 ]);
 document.querySelectorAll('#about-greeting .bs-body>p:not(.big-quote)').forEach((p,i)=>{ if(i%2) {p.classList.remove('left');p.classList.add('right');} });
+
+/* ---------- 이용안내: 단계 슬라이더 ---------- */
+const GSL={};
+function gslBuild(id){
+  const sec=document.getElementById(id); const fl=sec&&sec.querySelector('.flow'); if(!fl) return;
+  const st=[...fl.querySelectorAll('.st')].map(s=>({b:s.querySelector('b').textContent,h:s.querySelector('h4').textContent,p:s.querySelector('p').textContent}));
+  const el=document.createElement('div'); el.className='gsl'; el.id='gsl-'+id;
+  el.innerHTML=`<div class="gsl-nav"><div class="gsl-line"><div class="gsl-fill"></div></div>${st.map((s,i)=>`<button onclick="gslGo('${id}',${i},1)" aria-label="${esc(s.h)}"><i>${i+1}</i><span>${esc(s.h)}</span></button>`).join('')}</div>
+    <div class="gsl-view" onmouseenter="GSL['${id}'].hold=1" onmouseleave="GSL['${id}'].hold=0"><div class="gsl-track">${st.map((s,i)=>`<div class="gsl-card"><div class="gsl-num">${String(i+1).padStart(2,'0')}</div><div class="gsl-txt"><b>${esc(s.b)}</b><h4>${esc(s.h)}</h4><p>${esc(s.p)}</p></div></div>`).join('')}</div><i class="gsl-prog"></i></div>
+    <div class="gsl-ctrl"><button onclick="gslGo('${id}',GSL['${id}'].i-1,1)" aria-label="이전">‹</button><span class="gsl-cnt"></span><button onclick="gslGo('${id}',GSL['${id}'].i+1,1)" aria-label="다음">›</button></div>`;
+  fl.replaceWith(el);
+  GSL[id]={i:0,n:st.length,hold:0};
+  let sx=0; const v=el.querySelector('.gsl-view');
+  v.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  v.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) gslGo(id,GSL[id].i+(dx<0?1:-1),1);});
+  gslGo(id,0);
+  setInterval(()=>{ const g=GSL[id]; if(!sec.offsetParent||g.hold||document.hidden) return; gslGo(id,g.i+1); },4500);
+}
+function gslGo(id,i,user){
+  const g=GSL[id], el=document.getElementById('gsl-'+id); if(!g||!el) return;
+  g.i=(i+g.n)%g.n;
+  el.querySelector('.gsl-track').style.transform=`translateX(-${g.i*100}%)`;
+  el.querySelectorAll('.gsl-card').forEach((c,k)=>c.classList.toggle('on',k===g.i));
+  el.querySelectorAll('.gsl-nav button').forEach((b,k)=>{b.classList.toggle('on',k===g.i);b.classList.toggle('done',k<g.i);});
+  el.querySelector('.gsl-fill').style.width=(g.n>1?g.i/(g.n-1)*100:0)+'%';
+  el.querySelector('.gsl-cnt').textContent=(g.i+1)+' / '+g.n;
+  const pr=el.querySelector('.gsl-prog'); pr.classList.remove('run'); void pr.offsetWidth; pr.classList.add('run');
+}
+gslBuild('guide-grade'); gslBuild('guide-process');
+setupReveal('guide-grade',[['h2','up'],['.lead2','up'],['.infobar>div','right',140],['.gsl','zoom']]);
+setupReveal('guide-process',[['h2','up'],['.lead2','up'],['.gsl','zoom'],['.infobar>div','left',140]]);
+setupReveal('guide-cost',[['h2','up'],['.lead2','up'],['.costt tr','left',90],['.infobar>div','up',130],['.note','fade']]);
+setupReveal('guide-faq',[['h2','up'],['.lead2','up'],['details','right',110]]);
+document.querySelectorAll('#guide-faq details').forEach((d,i)=>{ if(i%2){ d.classList.remove('right'); d.classList.add('left'); } });
+/* ---------- 대표 인사말: 슬라이드 등장 ---------- */
+setupReveal('about-ceo',[
+  ['.cg2-photo','left'],['.cg2-intro .sq-title','right'],['.cg2-intro hr','grow'],['.cg2-intro p:not(.sq-title)','right',180],
+  ['.vals4>div','up',140],['.big-quote','zoom'],['.cg2-prof','left'],['.cg2-sign','right'],['.foot-scene','fade']
+]);
 
 /* 기관 현황 표 + 실제 지도 */
 const MAP_ADDR = a=>String(a).split(',')[0].replace(/\(.*?\)/g,'').trim();
