@@ -1228,6 +1228,68 @@ html.a11y-dark .a11y{filter:invert(1) hue-rotate(180deg)}
   .pc-bar{top:17px}
   .dsv-cta .hbtn{margin:6px 4px}
 }
+
+.photo-cr{text-align:center;font-size:13px;color:#8a8f88;margin:40px 0 0}
+.photo-cr a{color:#4f7d43}
+/* ===== 하루 일과 (시계) ===== */
+.page .psec.dy{padding:0;min-height:0;background:linear-gradient(180deg,#fbfcf8,#f1f6ec)!important;overflow:hidden}
+.dy-in{max-width:1180px;margin:0 auto;padding:110px 30px 110px}
+.dy-head{text-align:center;margin-bottom:60px}
+.dy-head small{font-size:13px;font-weight:800;letter-spacing:.3em;color:#8a6a45}
+.dy-head h2{font-size:clamp(26px,3vw,40px);line-height:1.4;margin:10px 0 14px;color:#1f2a20}
+.dy-head h2 em{font-style:normal;color:var(--g1)}
+.dy-head p{margin:0;color:#5b605a}
+.dy-stage{display:grid;grid-template-columns:360px 1fr;gap:50px;align-items:center}
+.dy-clock{position:relative;filter:drop-shadow(0 18px 30px rgba(30,60,30,.15))}
+.dy-clock svg{width:100%;display:block}
+#dy-hour,#dy-min{transform-origin:100px 100px;transform-box:view-box;transition:transform 1.4s cubic-bezier(.5,.05,.2,1)}
+#dy-arc{transition:d .8s}
+.dy-digital{text-align:center;line-height:1;margin-top:18px;filter:none}
+.dy-digital b{display:inline-block!important;margin-right:8px}
+.dy-digital b{display:block;font-size:40px;color:#1f2a20;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.dy-digital span{font-size:16px;color:#6a9a52;font-weight:800}
+.dy-slides{position:relative;min-height:420px}
+.dy-card{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1.05fr;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 22px 50px rgba(30,60,30,.14);opacity:0;transform:translateY(40px) scale(.97);transition:opacity .7s,transform .8s cubic-bezier(.3,.7,.2,1);pointer-events:none}
+.dy-card.past{transform:translateY(-40px) scale(.97)}
+.dy-card.on{opacity:1;transform:none;pointer-events:auto}
+.dy-img{position:relative;background:center/cover no-repeat;transform:scale(1.08);transition:transform 6s ease-out}
+.dy-card.on .dy-img{transform:scale(1)}
+.dy-badge{position:absolute;left:18px;top:18px;background:rgba(36,80,43,.92);color:#fff;font-weight:800;font-size:15px;border-radius:10px;padding:6px 14px}
+.dy-tx{padding:40px 40px;display:flex;flex-direction:column;justify-content:center}
+.dy-ic{width:54px;height:54px;border-radius:16px;background:#eef3e6;color:#4f7d43;display:grid;place-items:center;margin-bottom:14px}
+.dy-ic svg{width:30px;height:30px}
+.dy-tx small{font-size:15px;font-weight:800;color:#8a6a45;letter-spacing:.06em}
+.dy-tx h3{font-size:clamp(21px,2vw,28px);margin:4px 0 18px;color:#1f2a20}
+.dy-tx ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.dy-tx li{position:relative;padding-left:22px;color:#3b3e39;line-height:1.6;font-size:15.5px;opacity:0;transform:translateX(16px);transition:opacity .5s,transform .5s}
+.dy-tx li:before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:50%;background:#8cc46c}
+.dy-tx li b{color:#24502b}
+.dy-card.on li{opacity:1;transform:none}
+.dy-card.on li:nth-child(1){transition-delay:.35s}.dy-card.on li:nth-child(2){transition-delay:.5s}.dy-card.on li:nth-child(3){transition-delay:.65s}.dy-card.on li:nth-child(4){transition-delay:.8s}
+.dy-line{position:relative;display:grid;grid-template-columns:repeat(6,1fr);margin-top:60px}
+.dy-line:before{content:"";position:absolute;left:8%;right:8%;top:11px;height:3px;background:#d6e2cf}
+.dy-line button{position:relative;background:none;border:0;cursor:pointer;font:inherit;display:flex;flex-direction:column;align-items:center;gap:6px;color:#7a7f78}
+.dy-line i{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid #d6e2cf;transition:all .4s}
+.dy-line b{font-size:16px;color:#4b504a}
+.dy-line span{font-size:13px;word-break:keep-all;text-align:center}
+.dy-line .done i{background:#a9c98f;border-color:#a9c98f}
+.dy-line .on i{background:#3f7a40;border-color:#e3f0da;box-shadow:0 0 0 6px rgba(120,180,90,.2),0 0 16px rgba(120,190,90,.6);transform:scale(1.15)}
+.dy-line .on b,.dy-line .on span{color:#24502b;font-weight:800}
+.dy-sub{margin:90px 0 18px;font-size:24px;color:#1f2a20}
+.dy-sub small{font-size:14px;color:#8a8f88;font-weight:500;margin-left:8px}
+@media (max-width:980px){
+  .dy-stage{grid-template-columns:1fr;gap:28px}
+  .dy-clock{max-width:240px;margin:0 auto}
+  .dy-slides{min-height:620px}
+  .dy-card{grid-template-columns:1fr;grid-template-rows:220px 1fr}
+  .dy-tx{padding:24px 24px 28px}
+}
+@media (max-width:700px){
+  .dy-in{padding:60px 16px 70px}
+  .dy-slides{min-height:640px}
+  .dy-line{grid-template-columns:repeat(3,1fr);row-gap:20px}
+  .dy-line:before{display:none}
+}
 /* ---------- 모달 ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(20,30,25,.5);z-index:100;display:grid;place-items:center;padding:20px}
 .modal{background:#fff;border-radius:18px;padding:30px;width:100%;max-width:440px;max-height:92vh;overflow:auto}
@@ -1555,7 +1617,7 @@ td.l,th.l{text-align:left}
             <p>어르신의 신체 기능과 인지 기능을 유지하고 건강한 일상을 이어 가실 수 있도록 지원하며, 가족의 돌봄 부담도 함께 덜어 드립니다.</p>
             <div class="dsv-note">숲데이케어센터는 단순히 시간을 보내는 공간이 아닙니다.<br><b>배움과 활동이 있고, 친구와 웃음이 있으며,</b><br>전문적인 돌봄 속에서 어르신 한 분 한 분의 일상이 존중받는 공간입니다.</div>
           </div>
-          <div class="dsv-what-img"><img src="img/banner3.jpg?v=4" alt="그림 그리기 활동을 하며 웃는 어르신들과 요양보호사"><span class="dsv-tag">인지 · 미술 활동</span></div>
+          <div class="dsv-what-img"><img src="https://images.pexels.com/photos/6023607/pexels-photo-6023607.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="함께 공예 활동을 즐기는 어르신들" loading="lazy"><span class="dsv-tag">미술 · 공예 활동</span></div>
         </div>
         <div class="dsv-wrap dsv-svc">
           <div class="svc4"><span class="ic"><svg viewBox="0 0 32 32"><use href="#i-car"/></svg></span><b>안전한 송영 서비스</b><p>등·하원 차량 운행 및<br>승하차 보조</p></div>
@@ -1566,7 +1628,7 @@ td.l,th.l{text-align:left}
       </div>
 
       <!-- 2. 특별함 -->
-      <div class="dsv-2" style="background-image:url('img/fac_b2_1.jpg')">
+      <div class="dsv-2" style="background-image:url('https://images.pexels.com/photos/12085616/pexels-photo-12085616.jpeg?auto=compress&cs=tinysrgb&w=1800')">
         <div class="dsv-wrap">
           <span class="dsv-num lt">02</span>
           <small class="dsv-eb lt">WHY SOOP</small>
@@ -1585,19 +1647,19 @@ td.l,th.l{text-align:left}
         <div class="dsv-wrap">
           <div class="dsv-head"><span class="dsv-num">03</span><small class="dsv-eb">4 FEATURES</small><h2>숲데이케어센터의 4가지 특징</h2></div>
           <div class="ft">
-            <div class="ft-img"><img src="img/g_b2_2.jpg" alt="꽃꽂이 프로그램에 참여한 어르신들"></div>
+            <div class="ft-img"><img src="https://images.pexels.com/photos/38470287/pexels-photo-38470287.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="만들기 프로그램에 참여한 어르신들" loading="lazy"></div>
             <div class="ft-t"><span class="ft-n">01</span><h3>어르신 중심 맞춤형 프로그램</h3><p>획일적인 활동보다 어르신의 건강 상태와 흥미, 인지 능력을 고려한 프로그램을 운영합니다.</p><p>미술·음악·인지 활동 등 다양한 경험을 통해 일상의 활력과 성취감을 높입니다.</p><ul><li>미술 · 원예</li><li>음악 · 공연</li><li>회상 · 인지 활동</li></ul></div>
           </div>
           <div class="ft rev">
-            <div class="ft-img"><img src="img/g_b1_2.jpg" alt="워킹슬링 장비로 보행 훈련을 하는 어르신과 직원들"></div>
+            <div class="ft-img"><img src="https://images.pexels.com/photos/5790822/pexels-photo-5790822.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="어르신 혈압을 확인하는 건강관리" loading="lazy"></div>
             <div class="ft-t"><span class="ft-n">02</span><h3>전문 인력이 함께하는 건강관리</h3><p>사회복지사, 요양보호사, 간호 인력, 물리치료사 등 전문 인력이 협력하여 어르신의 건강과 안전을 살핍니다.</p><p>일상적인 건강 확인부터 신체 기능 유지 활동까지 세심하게 지원합니다.</p><ul><li>사회복지사</li><li>요양보호사</li><li>간호 인력</li><li>물리치료사</li></ul></div>
           </div>
           <div class="ft">
-            <div class="ft-img"><img src="img/g_b1_1.jpg" alt="색깔 컵 쌓기 인지 활동"></div>
+            <div class="ft-img"><img src="https://images.pexels.com/photos/11674389/pexels-photo-11674389.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="의자에 앉아 함께 체조하는 어르신들" loading="lazy"></div>
             <div class="ft-t"><span class="ft-n">03</span><h3>인지 · 신체 · 정서 통합 프로그램</h3><p>기억력과 집중력을 자극하는 인지 활동, 근력과 균형 감각을 위한 신체 활동, 사회적 교류를 돕는 여가 프로그램을 균형 있게 제공합니다.</p><ul><li>인지 · 기억력</li><li>근력 · 균형</li><li>교류 · 여가</li></ul></div>
           </div>
           <div class="ft rev">
-            <div class="ft-img"><img src="img/fac_b3_4.jpg" alt="밝고 넓은 프로그램실 · 식당"></div>
+            <div class="ft-img"><img src="https://images.pexels.com/photos/12798432/pexels-photo-12798432.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="밝은 창가에서 쉬고 있는 어르신들" loading="lazy"></div>
             <div class="ft-t"><span class="ft-n">04</span><h3>안전하고 편안한 생활 공간</h3><p>어르신의 이동 편의와 안전을 고려한 생활 환경에서 식사, 휴식, 프로그램을 편안하게 이용하실 수 있도록 지원합니다.</p><p>서로 소통하며 따뜻한 관계를 만들어 가는 공간을 지향합니다.</p><a class="ft-more" href="#daycare-facility">시설 둘러보기 <svg viewBox="0 0 30 12"><path d="M1 6h27M23 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a></div>
           </div>
         </div>
@@ -1613,6 +1675,7 @@ td.l,th.l{text-align:left}
             <div class="pc-view"><div class="pc-track" id="pc-track"></div></div>
             <div class="pc-ctl"><button onclick="pcGo(PC_I-1)" aria-label="이전 단계">‹</button><span id="pc-num">1 / 5</span><button onclick="pcGo(PC_I+1)" aria-label="다음 단계">›</button></div>
           </div>
+          <p class="photo-cr">※ 이 페이지의 사진은 이해를 돕기 위한 무료 이미지(Pexels)입니다. 실제 센터 모습은 <a href="#daycare-facility">시설 소개</a>에서 보실 수 있습니다.</p>
           <div class="dsv-cta"><p>어르신께 맞는 이용 방법이 궁금하신가요?</p><button class="hbtn fill" onclick="openCall()"><svg><use href="#i-phone"/></svg>전화 상담</button><button class="hbtn line" onclick="openInquiry()"><svg><use href="#i-doc"/></svg>상담 문의 남기기</button></div>
         </div>
       </div>
@@ -1623,12 +1686,30 @@ td.l,th.l{text-align:left}
       <div class="fac-tabs" id="fac-tabs"></div>
       <div id="fac-body"></div>
     </div></section>
-    <section class="psec" id="daycare-program"><div class="wrap w">
-      <h2>하루 일과 · 프로그램</h2><p class="lead2">평일 기준이며, 지점과 요일에 따라 다를 수 있습니다.</p>
-      <div class="dflow" data-daily></div>
-      <h3 style="margin:40px 0 14px;font-size:22px">프로그램 현장</h3>
-      <div class="pphotos" id="prog-photos"></div>
-    </div></section>
+    <section class="psec dy" id="daycare-program">
+      <div class="dy-in">
+        <div class="dy-head"><small>DAILY SCHEDULE</small><h2>어르신의 건강과 활력,<br><em>즐거움이 함께하는 하루</em></h2><p>시계가 돌아가며 숲데이케어센터의 하루를 보여 드립니다.</p></div>
+        <div class="dy-stage">
+          <div class="dy-clock">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="94" fill="#fff" stroke="#dfe8d8" stroke-width="4"/>
+              <circle cx="100" cy="100" r="84" fill="none" stroke="#eef3e8" stroke-width="10"/>
+              <path id="dy-arc" d="" fill="none" stroke="#8cc46c" stroke-width="10" stroke-linecap="round"/>
+              <g id="dy-ticks"></g>
+              <g id="dy-hour"><line x1="100" y1="100" x2="100" y2="52" stroke="#24502b" stroke-width="7" stroke-linecap="round"/></g>
+              <g id="dy-min"><line x1="100" y1="100" x2="100" y2="30" stroke="#6a9a52" stroke-width="4" stroke-linecap="round"/></g>
+              <circle cx="100" cy="100" r="7" fill="#24502b"/><circle cx="100" cy="100" r="3" fill="#fff"/>
+            </svg>
+            <div class="dy-digital"><b id="dy-time">07:00</b><span id="dy-ampm">오전</span></div>
+          </div>
+          <div class="dy-slides" id="dy-slides"></div>
+        </div>
+        <div class="dy-line" id="dy-line"></div>
+        <p class="photo-cr">※ 평일 기준이며, 지점과 요일에 따라 다를 수 있습니다. 사진은 이해를 돕기 위한 무료 이미지(Pexels)입니다.</p>
+        <h3 class="dy-sub">프로그램 현장 <small>실제 센터 활동 사진</small></h3>
+        <div class="pphotos" id="prog-photos"></div>
+      </div>
+    </section>
   </div>
 
   <!-- ===================== 방문요양 ===================== -->
@@ -1911,7 +1992,7 @@ const fmtDate = d=>d.replace(/-/g,'.');
 /* ---------- 메뉴 구조 ---------- */
 const MENU = [
   {id:'about',    name:'기관소개',   sub:[['ceo','대표 인사말','숲과 함께, 더 건강하고 더 행복한 일상을 만들어 갑니다.'],['greeting','브랜드 스토리','어르신의 하루가 배움이 되고, 일상이 행복이 되는 곳.'],['vision','철학 · 미션 · 비전','편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임.'],['history','숲이 걸어온 길'],['status','기관 현황 및 오시는 길','주야간보호 3개 센터와 방문요양 서비스의 위치와 연락처를 안내합니다.']]},
-  {id:'daycare',  name:'주야간보호', sub:[['intro','서비스 소개','어르신의 하루가 건강해지고, 일상이 즐거워지는 곳'],['b1','지점 안내'],['facility','시설 소개','쾌적하고 안전한 공간에서 어르신의 하루를 함께합니다.'],['program','하루 일과 · 프로그램']]},
+  {id:'daycare',  name:'주야간보호', sub:[['intro','서비스 소개','어르신의 하루가 건강해지고, 일상이 즐거워지는 곳'],['b1','지점 안내'],['facility','시설 소개','쾌적하고 안전한 공간에서 어르신의 하루를 함께합니다.'],['program','하루 일과 · 프로그램','어르신의 건강과 활력, 즐거움이 함께하는 하루']]},
   {id:'homecare', name:'방문요양',   sub:[['intro','센터 소개'],['service','서비스 내용'],['process','이용 절차'],['recruit','요양보호사 채용']]},
   {id:'guide',    name:'이용안내',   sub:[['grade','장기요양등급 신청'],['process','이용 절차'],['cost','비용 안내'],['faq','자주 묻는 질문']]},
   {id:'news',     name:'알림마당',   sub:[['notice','공지사항'],['gallery','활동 갤러리']]},
@@ -2814,11 +2895,11 @@ function viewFac(i){
 
 /* 서비스 소개: 이용 절차 슬라이더 */
 const PC_STEPS=[
-  {t:'상담 신청',d:'전화 또는 방문을 통해 이용 안내 및 상담 일정을 확인합니다.',img:'img/t2.jpg',k:['전화 상담','센터 방문 상담','이용 가능 여부 안내']},
-  {t:'어르신 상태 및 욕구 확인',d:'장기요양등급, 건강 상태, 생활 습관, 돌봄 필요 사항을 확인합니다.',img:'img/fac_b3_3.jpg',k:['장기요양등급 확인','건강 · 복약 상태','생활 습관 · 선호']},
-  {t:'개별 이용계획 수립',d:'어르신의 특성과 보호자의 요청을 고려하여 이용 일정과 돌봄 계획을 마련합니다.',img:'img/fac_b3_1.jpg',k:['이용 요일 · 시간','송영 위치','맞춤 프로그램']},
-  {t:'서비스 이용',d:'송영, 식사, 건강관리, 인지 · 신체 프로그램 등 일상 돌봄 서비스를 제공합니다.',img:'img/g_b3_2.jpg',k:['안전한 송영','식사 · 간식','인지 · 신체 프로그램']},
-  {t:'지속적인 관리 및 소통',d:'어르신의 변화와 적응 상태를 살피고 보호자와 소통하며 서비스를 조정합니다.',img:'img/g_b2_1.jpg',k:['정기 상담','보호자 소통','서비스 조정']},
+  {t:'상담 신청',d:'전화 또는 방문을 통해 이용 안내 및 상담 일정을 확인합니다.',img:'https://images.pexels.com/photos/7544758/pexels-photo-7544758.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['전화 상담','센터 방문 상담','이용 가능 여부 안내']},
+  {t:'어르신 상태 및 욕구 확인',d:'장기요양등급, 건강 상태, 생활 습관, 돌봄 필요 사항을 확인합니다.',img:'https://images.pexels.com/photos/8088857/pexels-photo-8088857.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['장기요양등급 확인','건강 · 복약 상태','생활 습관 · 선호']},
+  {t:'개별 이용계획 수립',d:'어르신의 특성과 보호자의 요청을 고려하여 이용 일정과 돌봄 계획을 마련합니다.',img:'https://images.pexels.com/photos/4566528/pexels-photo-4566528.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['이용 요일 · 시간','송영 위치','맞춤 프로그램']},
+  {t:'서비스 이용',d:'송영, 식사, 건강관리, 인지 · 신체 프로그램 등 일상 돌봄 서비스를 제공합니다.',img:'https://images.pexels.com/photos/7658827/pexels-photo-7658827.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['안전한 송영','식사 · 간식','인지 · 신체 프로그램']},
+  {t:'지속적인 관리 및 소통',d:'어르신의 변화와 적응 상태를 살피고 보호자와 소통하며 서비스를 조정합니다.',img:'https://images.pexels.com/photos/8972261/pexels-photo-8972261.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['정기 상담','보호자 소통','서비스 조정']},
 ];
 let PC_I=0, PC_T=null;
 function pcBuild(){
@@ -2847,8 +2928,46 @@ setupReveal('daycare-intro',[
   ['.dsv-head','up'],['.ft:not(.rev) .ft-img','left'],['.ft:not(.rev) .ft-t','right'],['.ft.rev .ft-img','right'],['.ft.rev .ft-t','left'],
   ['.pc','up'],['.dsv-cta','up']
 ]);
+
+/* 하루 일과: 시계 슬라이드 */
+const DAY=[
+  {h:7,m:0,t:'송영 서비스 (등원·하원)',ic:'car',img:'https://images.pexels.com/photos/34073814/pexels-photo-34073814.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['안전한 차량 운행 및 어르신 송영','차량 승·하차 보조 및 이동 지원','등원 시 어르신의 건강 상태 확인']},
+  {h:9,m:0,t:'건강 체크 · 아침 체조',ic:'dumb',img:'https://images.pexels.com/photos/5790818/pexels-photo-5790818.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['건강 체크: 혈압·체온·맥박 등 기초 건강 상태 확인','어르신별 컨디션 확인 및 건강 상담','전신 스트레칭 및 관절 가동 범위 운동','가벼운 아침 체조를 통한 신체 활력 증진']},
+  {h:10,m:0,t:'오전 간식',ic:'cup',img:'https://images.pexels.com/photos/8507662/pexels-photo-8507662.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['어르신을 위한 영양 간식 제공','계절과 건강 상태를 고려한 간식 구성','충분한 수분 섭취 및 휴식','어르신 간 담소와 정서적 교류']},
+  {h:11,m:0,t:'맞춤형 프로그램',ic:'brain',img:'https://images.pexels.com/photos/37693458/pexels-photo-37693458.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['인지 활동: 기억력 훈련, 회상 활동, 두뇌 자극','정서 활동: 미술, 공예, 음악 프로그램','사회성 활동: 소그룹 활동 및 상호 교류','개별 맞춤 활동: 인지·신체 수준을 고려한 프로그램']},
+  {h:14,m:0,t:'오후 프로그램',ic:'people',img:'https://images.pexels.com/photos/7330117/pexels-photo-7330117.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['여가·취미 활동: 노래 교실, 영화 감상, 원예 활동','특별 활동: 생신 잔치, 계절 행사, 문화 활동','소그룹 프로그램: 레크리에이션, 게임, 퀴즈','정서 지원: 어르신 간 친목 및 사회적 교류']},
+  {h:15,m:0,t:'신체 활동 프로그램',ic:'run',img:'https://images.pexels.com/photos/7551622/pexels-photo-7551622.jpeg?auto=compress&cs=tinysrgb&w=1000',k:['기능 회복 운동: 근력·균형·유연성 강화','물리치료 연계 운동: 어르신별 신체 기능에 맞춘 활동','낙상 예방 운동: 균형 감각 및 보행 능력 유지','생활 체육: 의자 체조, 실내 걷기, 가벼운 스트레칭']},
+];
+let DY_I=0, DY_T=null, DY_A=0;
+function dyBuild(){
+  const sl=document.getElementById('dy-slides'); if(!sl) return;
+  let tk=''; for(let i=0;i<12;i++){const a=i*30*Math.PI/180;tk+=`<line x1="${100+70*Math.sin(a)}" y1="${100-70*Math.cos(a)}" x2="${100+(i%3?66:62)*Math.sin(a)}" y2="${100-(i%3?66:62)*Math.cos(a)}" stroke="${i%3?'#c9d6c2':'#6a9a52'}" stroke-width="${i%3?2:4}" stroke-linecap="round"/>`;}
+  document.getElementById('dy-ticks').innerHTML=tk;
+  sl.innerHTML=DAY.map((d,i)=>`<article class="dy-card"><div class="dy-img" style="background-image:url('${d.img}')"><span class="dy-badge">${String(d.h).padStart(2,'0')}:00</span></div><div class="dy-tx"><span class="dy-ic"><svg><use href="#i-${d.ic}"/></svg></span><small>${String(d.h).padStart(2,'0')}:${String(d.m).padStart(2,'0')}</small><h3>${d.t}</h3><ul>${d.k.map(x=>{const p=x.split(': ');return `<li>${p.length>1?`<b>${p[0]}</b> ${p.slice(1).join(': ')}`:x}</li>`}).join('')}</ul></div></article>`).join('');
+  document.getElementById('dy-line').innerHTML=DAY.map((d,i)=>`<button onclick="dyGo(${i},true)"><i></i><b>${String(d.h).padStart(2,'0')}:00</b><span>${d.t.replace(/ \(.*\)/,'')}</span></button>`).join('');
+  const st=document.querySelector('.dy-stage'); st.addEventListener('mouseenter',()=>clearInterval(DY_T)); st.addEventListener('mouseleave',dyAuto);
+  let x0=null; st.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true}); st.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)dyGo(DY_I+(dx<0?1:-1),true);x0=null;});
+  dyGo(0);
+}
+function dyGo(i,user){
+  const n=DAY.length; const prev=DY_I; DY_I=(i+n)%n; const d=DAY[DY_I];
+  const target=(d.h%12)*30+d.m*0.5; let delta=target-(DY_A%360); if(delta<0) delta+=360; if(DY_I===prev&&DY_A) delta=0; DY_A+=delta;
+  document.getElementById('dy-hour').style.transform=`rotate(${DY_A}deg)`;
+  document.getElementById('dy-min').style.transform=`rotate(${DY_A*12}deg)`;
+  const s=DAY[0].h, e=DAY[n-1].h, f=(d.h-s)/(e-s); const ang=(s%12)*30, ang2=ang+f*((e%12)*30+360-ang)%360;
+  const end=ang+Math.max(0.01,f*((((e%12)*30-ang)+360)%360)); const rad=x=>x*Math.PI/180;
+  const p=x=>`${100+84*Math.sin(rad(x))} ${100-84*Math.cos(rad(x))}`;
+  document.getElementById('dy-arc').setAttribute('d',`M ${p(ang)} A 84 84 0 ${end-ang>180?1:0} 1 ${p(end)}`);
+  document.getElementById('dy-time').textContent=`${String(d.h>12?d.h-12:d.h).padStart(2,'0')}:${String(d.m).padStart(2,'0')}`;
+  document.getElementById('dy-ampm').textContent=d.h<12?'오전':'오후';
+  document.querySelectorAll('.dy-card').forEach((c,k)=>{c.classList.toggle('on',k===DY_I);c.classList.toggle('past',k<DY_I);});
+  document.querySelectorAll('#dy-line button').forEach((b,k)=>{b.classList.toggle('on',k===DY_I);b.classList.toggle('done',k<DY_I);});
+  if(user) dyAuto();
+}
+function dyAuto(){ clearInterval(DY_T); DY_T=setInterval(()=>{ const p=document.getElementById('daycare-program'); if(p&&p.offsetParent) dyGo(DY_I+1); },5000); }
+setupReveal('daycare-program',[['.dy-head','up'],['.dy-clock','left'],['.dy-slides','right'],['#dy-line','up']]);
 /* ---------- 시작 ---------- */
-buildMenus(); renderSite(); renderOrg(); renderFacility(); pcBuild(); pcAuto(); applyA11y(); slideShow(0); route();
+buildMenus(); renderSite(); renderOrg(); renderFacility(); pcBuild(); pcAuto(); dyBuild(); dyAuto(); applyA11y(); slideShow(0); route();
 try{ const id=sessionStorage.getItem(KEY+'-me'); const a=id&&DB.accounts.find(x=>x.id===id); if(a){ ME=a; CUR=a.branch==='all'?'b1':a.branch; showAdmin(); } }catch(e){}
 </script>
 </body>
