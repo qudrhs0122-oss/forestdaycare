@@ -1157,6 +1157,22 @@ html.a11y-dark .a11y{filter:invert(1) hue-rotate(180deg)}
 
 .green-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(100deg,#2e7d32,#5aa04a);color:#fff;font-size:13px;font-weight:800;border-radius:99px;padding:5px 12px 5px 8px;box-shadow:0 3px 10px rgba(46,125,50,.25);white-space:nowrap;vertical-align:middle;margin:0 6px 6px 0}
 .green-badge svg{width:18px;height:18px;color:#ffd54f}
+.green-badge{cursor:pointer}
+.cert-strip{display:flex;align-items:center;gap:22px;margin:20px 0 6px;padding:18px 20px;border-radius:16px;background:linear-gradient(110deg,#f3f8ee,#fffdf6);border:1px solid #e1ead8}
+.cert-strip .cs-t{flex:1;min-width:0}
+.cert-strip .cs-t b{display:block;color:#2e6b34;font-size:16px;margin-bottom:4px}
+.cert-strip .cs-t span{font-size:14px;color:#5b605a;line-height:1.6}
+.cert-strip .cs-list{display:flex;gap:12px}
+.cert-strip figure{margin:0;width:92px;cursor:pointer;text-align:center}
+.cert-strip figure img{display:block;width:100%;aspect-ratio:5/7;object-fit:cover;border-radius:6px;background:#fff;box-shadow:0 6px 16px rgba(40,60,30,.18),0 0 0 4px #fff,0 0 0 5px #d8c48a;transition:transform .3s}
+.cert-strip figure:hover img{transform:translateY(-4px) rotate(-1deg)}
+.cert-strip figcaption{font-size:12px;font-weight:700;color:#8a6a45;margin-top:10px}
+.cert-view img{display:block;margin:0 auto;max-width:100%;max-height:72vh;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.cert-view .cv-cap{text-align:center;margin:16px 0 4px}
+.cert-view .cv-cap b{display:block;font-size:19px;color:#2e6b34}
+.cert-view .cv-cap span{display:block;color:#4b504a;margin-top:4px}
+.cert-view .cv-cap small{color:#8a8f88}
+@media (max-width:700px){.cert-strip{flex-direction:column;align-items:flex-start}}
 .bdetail .green-badge{margin-left:8px}
 .og-table td.n .green-badge{margin:6px 0 0;font-size:11.5px}
 .og-item .tx .green-badge{align-self:flex-start;font-size:11.5px;padding:3px 10px 3px 6px;margin:0 0 2px}
@@ -2250,8 +2266,18 @@ function togglePlay(){ PLAY=!PLAY; $('#playbtn').innerHTML = PLAY
   : '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>'; PLAY?startSlides():stopSlides(); }
 
 /* ---------- 상담 ---------- */
-const BADGE={b1:'상위 1% 그린청구기관'};
-const badge=k=>BADGE[k]?`<span class="green-badge"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 2.2 3.4-.4.9 3.3 3 1.7-1.3 3.2 1.3 3.2-3 1.7-.9 3.3-3.4-.4L12 22l-2.6-2.2-3.4.4-.9-3.3-3-1.7L3.4 12 2.1 8.8l3-1.7.9-3.3 3.4.4z" fill="currentColor"/><path d="M8 12.3l2.6 2.6L16 9.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>${BADGE[k]}</span>`:'';
+const BADGE={b1:'청구그린기관'};
+const CERTS={b1:[
+  {img:'img/cert_green_2026.jpg',y:'2026',t:'청구그린(Green)기관',d:'선정기간 2026. 4. 1. ~ 2027. 3. 31. · 주야간보호'},
+  {img:'img/cert_green_2024.jpg',y:'2024',t:'청구그린(Green)기관',d:'선정기간 2024. 4. 1. ~ 2025. 3. 31. · 주야간보호'}
+]};
+function certStrip(k){ const c=CERTS[k]; if(!c) return '';
+  return `<div class="cert-strip"><div class="cs-t"><b>국민건강보험공단 선정 청구그린(Green)기관</b><span>장기요양급여비용 청구의 모범이 되는 기관으로 선정되었습니다.</span></div>
+    <div class="cs-list">${c.map((x,i)=>`<figure onclick="openCert('${k}',${i})"><img src="${x.img}" alt="${esc(x.y)}년 ${esc(x.t)} 인증서"><figcaption>${esc(x.y)}년 선정</figcaption></figure>`).join('')}</div></div>`; }
+function openCert(k,i){ k=k||'b1'; i=i||0; const c=CERTS[k], n=c.length, x=c[i];
+  modal(`<div class="cert-view"><img src="${x.img}" alt="${esc(x.y)}년 ${esc(x.t)} 인증서"><div class="cv-cap"><b>${esc(x.y)}년 ${esc(x.t)}</b><span>${esc(DB.branches[k].name)} · ${esc(x.d)}</span><small>국민건강보험공단 이사장</small></div>
+    <div class="actions">${n>1?`<button class="btn light" onclick="openCert('${k}',${(i-1+n)%n})">◀ 이전</button><span style="margin:auto;color:var(--muted)">${i+1} / ${n}</span><button class="btn light" onclick="openCert('${k}',${(i+1)%n})">다음 ▶</button>`:''}<button class="btn" onclick="closeModal()">닫기</button></div></div>`, true); }
+const badge=k=>BADGE[k]?`<span class="green-badge" role="button" tabindex="0" title="인증서 보기" onclick="event.preventDefault();event.stopPropagation();openCert('${k}')"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 2.2 3.4-.4.9 3.3 3 1.7-1.3 3.2 1.3 3.2-3 1.7-.9 3.3-3.4-.4L12 22l-2.6-2.2-3.4.4-.9-3.3-3-1.7L3.4 12 2.1 8.8l3-1.7.9-3.3 3.4.4z" fill="currentColor"/><path d="M8 12.3l2.6 2.6L16 9.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>${BADGE[k]}</span>`:'';
 function allCenters(){
   const day = BR.map(b=>({key:b, kind:'day', kindName:'주야간보호', ...DB.branches[b], photo:DB.branches[b].photo||B_PHOTO[b], thumb:DB.branches[b].photo||T_PHOTO[b]}));
   const h = DB.homecare; return [...day, {key:'hc', kind:'home', kindName:'방문요양', no:'방문요양', ...h, cap:null, thumb:h.photo||''}];
@@ -2320,6 +2346,7 @@ function renderSite(){
     <span class="no">${esc(x.no)}</span>${badge(b)}<h3>${esc(x.name)}</h3>
     <dl><dt>주소</dt><dd>${esc(x.addr)}</dd><dt>대표전화</dt><dd><a href="tel:${esc(x.tel)}" style="font-weight:800;color:var(--g1);text-decoration:none">${esc(x.tel)}</a></dd><dt>정원</dt><dd>${esc(x.cap)}명</dd><dt>운영 시간</dt><dd>${esc(x.hours)}</dd></dl>
     <div class="hbtns"><a class="hbtn fill" href="tel:${esc(x.tel)}" style="padding:10px 20px;font-size:15px">${ico('i-phone')}전화 상담</a><a class="hbtn line" href="${mapUrl(x.addr)}" target="_blank" rel="noopener" style="padding:10px 20px;font-size:15px">${ico('i-pin')}지도 보기</a></div></div>
+    ${certStrip(b)}
     ${(()=>{const ps=allGallery().filter(g=>g.branch===b).slice(0,4); return ps.length?`<div class="bphotos">${ps.map(g=>`<figure onclick="viewGallery('${g.id}')"><div style="background-image:url('${g.photo}')"></div><figcaption>${esc(g.title)}</figcaption></figure>`).join('')}</div>`:'';})()}</div>`}).join('');
   $('#prog-photos').innerHTML = SEED_GALLERY.map(g=>`<figure onclick="viewGallery('${g.id}')"><div style="background-image:url('${g.photo}')"></div><figcaption><b>${esc(g.title)}</b><small>${esc(branchLabel(g.branch))}</small></figcaption></figure>`).join('');
   // 방문요양
@@ -3122,7 +3149,7 @@ function renderFacility(auto){
   tabs.innerHTML=BR.map(b=>`<button class="${b===FAC_B?'on':''}" onclick="FAC_B='${b}';FAC_I=0;renderFacility()">${esc(DB.branches[b].name)}</button>`).join('');
   const list=FACILITY[FAC_B]||[], x=DB.branches[FAC_B];
   const body=document.getElementById('fac-body');
-  const fb=badge(FAC_B)?`<div style="text-align:center;margin:-14px 0 22px">${badge(FAC_B)}</div>`:'';
+  const fb=badge(FAC_B)?`<div style="text-align:center;margin:-14px 0 22px">${badge(FAC_B)} <a href="#" onclick="openCert('${FAC_B}');return false" style="font-size:13px;color:var(--g1);font-weight:700;margin-left:6px">인증서 보기 ›</a></div>`:'';
   if(!list.length){ body.innerHTML=`<div class="fac-empty"><img src="${x.photo||B_PHOTO[FAC_B]}" alt=""><p><b>${esc(x.name)}</b> 시설 사진을 준비하고 있습니다.</p><a class="hbtn line" href="tel:${esc(x.tel)}" style="padding:10px 20px;font-size:15px">${ico('i-phone')}${esc(x.tel)} 방문 상담 문의</a></div>`; facAuto(); return; }
   FAC_I=Math.min(FAC_I,list.length-1); const a=list[FAC_I];
   body.innerHTML=fb+`<figure class="fac-main" onclick="viewFac(FAC_I)" onmouseenter="FAC_HOLD=true" onmouseleave="FAC_HOLD=false"><img id="fac-mimg" src="${a.img}" alt="${esc(x.name)} ${esc(a.t)}"><figcaption><b id="fac-mt">${esc(a.t)}</b><span id="fac-md">${esc(a.d)}</span></figcaption><i class="fac-bar" id="fac-bar"></i></figure>
