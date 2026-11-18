@@ -3165,7 +3165,7 @@ function a11ySet(k,v){ A11Y[k]=v; applyA11y(); }
 /* =========================================================
    상담 문의 (구글 앱스 스크립트 저장소)
    ========================================================= */
-const INQ_URL = '';   // 구글 앱스 스크립트 웹앱 주소
+const INQ_URL = 'https://script.google.com/macros/s/AKfycbwOjZHkJb_LrviEUsrrFxOTF25e8XCmRMhfiJyw0cewaYnDS6mjv2lAMSFbpjMDZAwk3w/exec';   // 구글 앱스 스크립트 웹앱 주소
 let INQ_PW=''; try{ INQ_PW=sessionStorage.getItem('sup-inq-pw')||''; }catch(e){}
 async function inqApi(body){
   const r=await fetch(INQ_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
