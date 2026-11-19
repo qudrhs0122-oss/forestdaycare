@@ -1080,6 +1080,15 @@ html.a11y-dark .a11y{filter:invert(1) hue-rotate(180deg)}
 
 /* 상담 문의 */
 .a11y{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.bgm-fab{position:relative;width:52px;height:52px;margin:0 6px 0 0;border-radius:50%;border:0;background:#F6F1E6;color:#42352B;box-shadow:0 6px 16px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;line-height:1}
+.bgm-fab svg{width:18px;height:18px}.bgm-fab span{font-size:10px;font-weight:800}
+.bgm-fab.on{background:#587B35;color:#fff}
+.bgm-fab.on svg{display:none}
+.bgm-eq{display:none;gap:2px;align-items:flex-end;height:16px;margin-bottom:1px}
+.bgm-fab.on .bgm-eq{display:flex}
+.bgm-eq b{width:3px;background:#fff;border-radius:2px;animation:bgmeq 1s ease-in-out infinite}
+.bgm-eq b:nth-child(2){animation-delay:.3s}.bgm-eq b:nth-child(3){animation-delay:.6s}
+@keyframes bgmeq{0%,100%{height:4px}50%{height:15px}}
 .inq-fab{width:64px;height:64px;border-radius:50%;border:0;background:#d1a062;color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;line-height:1.1}
 .inq-fab svg{width:22px;height:22px}
 .inq-fab span{font-size:11px;font-weight:800}
@@ -2149,6 +2158,8 @@ td.l,th.l{text-align:left}
     <div class="a11y-row"><span>명암 반전</span><button class="a11y-tg" data-dark onclick="a11ySet('dark',!A11Y.dark)" aria-pressed="false"><i></i></button></div>
     <button class="a11y-reset" onclick="A11Y={size:0,dark:false};applyA11y()">처음 상태로</button>
   </div>
+  <button class="bgm-fab" id="bgm-fab" onclick="bgmToggle()" aria-label="배경음악 켜기/끄기" title="배경음악"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg><span id="bgm-lb">음악</span><i class="bgm-eq"><b></b><b></b><b></b></i></button>
+  <audio id="bgm" src="img/bgm_healing.mp3" loop preload="none"></audio>
   <button class="inq-fab" onclick="openInquiry()" aria-label="상담 문의 남기기"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>상담<br>문의</span></button>
   <button class="a11y-fab" aria-label="글자 크기 · 명암 반전 설정" onclick="const p=$('#a11y-panel');p.hidden=!p.hidden"><span>가</span><small>보기</small></button>
 </div>
@@ -3412,6 +3423,18 @@ function hcpAuto(){ clearInterval(HCP_T); HCP_T=setInterval(()=>{const p=documen
   ['.hc-val4>div','up',130],['.hc-elig','up'],['.hc-elig-g>div','zoom',110],['.hcp','up'],['.hc-end .dsv-wrap>*','up',110]
 ]));
 /* ---------- 시작 ---------- */
+
+/* ---------- 배경음악: 첫 클릭/터치 때 잔잔하게 시작, 끄면 기억 ---------- */
+let BGM_FADE=null;
+function bgmPref(){ try{ return localStorage.getItem('sup-bgm')||'on'; }catch(e){ return 'on'; } }
+function bgmSet(p){ try{ localStorage.setItem('sup-bgm',p); }catch(e){} }
+function bgmUI(on){ const b=document.getElementById('bgm-fab'); if(!b) return; b.classList.toggle('on',on); b.title=on?'배경음악 끄기':'배경음악 켜기'; }
+function bgmPlay(){ const a=document.getElementById('bgm'); if(!a) return; a.volume=0; const p=a.play(); if(p&&p.then) p.then(()=>{ bgmUI(true); clearInterval(BGM_FADE); BGM_FADE=setInterval(()=>{ a.volume=Math.min(.35,a.volume+.02); if(a.volume>=.35) clearInterval(BGM_FADE); },120); }).catch(()=>bgmUI(false)); }
+function bgmStop(){ const a=document.getElementById('bgm'); if(!a) return; clearInterval(BGM_FADE); BGM_FADE=setInterval(()=>{ a.volume=Math.max(0,a.volume-.04); if(a.volume<=0){ clearInterval(BGM_FADE); a.pause(); } },60); bgmUI(false); }
+function bgmToggle(){ const a=document.getElementById('bgm'); if(a.paused||a.volume===0){ bgmSet('on'); bgmPlay(); } else { bgmSet('off'); bgmStop(); } }
+(function(){ const first=e=>{ ['pointerdown','keydown','touchstart'].forEach(k=>removeEventListener(k,first,true));
+    if(e.target && e.target.closest && e.target.closest('#bgm-fab')) return; if(bgmPref()!=='off') bgmPlay(); };
+  ['pointerdown','keydown','touchstart'].forEach(k=>addEventListener(k,first,true)); })();
 buildMenus(); renderSite(); renderOrg(); renderFacility(); pcBuild(); pcAuto(); dyBuild(); dyAuto(); hcpBuild(); hcpAuto(); applyA11y(); slideShow(0); route();
 if(FBA) FBA.onAuthStateChanged(u=>{ if(!u||ME) return; let want=''; try{ want=sessionStorage.getItem(KEY+'-me')||''; }catch(e){}
   const m=meFrom(u.email); if(m && want===m.id){ ME=m; CUR=m.branch==='all'?m.home:m.branch; try{INQ_PW=sessionStorage.getItem('sup-inq-pw')||INQ_PW}catch(e){} showAdmin(); } });
