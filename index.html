@@ -668,6 +668,7 @@ body:has(#pg-home.on) .foot3{display:none}
 #pg-home{height:auto;min-height:0}
 .h-hero{aspect-ratio:1854/848;height:auto;min-height:0;background:#f6f3ec}
 .hs .bn{display:block;width:100%;height:100%;object-fit:cover}
+.hs video.bn{background:#F6F1E6}
 .hctl{bottom:14px}
 .tiles{width:auto;grid-template-columns:repeat(8,1fr);grid-template-rows:auto}
 .tile{min-height:max(170px,calc(100vh - (100vw - 250px) * 0.4574));padding:16px 14px}
@@ -1652,7 +1653,8 @@ td.l,th.l{text-align:left}
   <div class="page" id="pg-home">
     <div class="h-hero">
       <div class="slides" id="slides">
-        <a class="slide hs on" href="#about-vision"><img class="bn" src="img/banner1.jpg?v=4" alt="편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임."></a>
+        <div class="slide hs on vs"><video class="bn" id="hero-video" src="img/hero_video.mp4" poster="img/hero_video.jpg" muted playsinline preload="auto" autoplay aria-label="숲데이케어센터 어르신들의 즐거운 하루 영상"></video></div>
+        <a class="slide hs" href="#about-vision"><img class="bn" src="img/banner1.jpg?v=4" alt="편의보다 존엄, 속도보다 안전, 규정보다 사람, 변명보다 책임."></a>
         <a class="slide hs" href="#daycare-program"><img class="bn" src="img/banner2.jpg?v=4" alt="어르신의 하루가 더 건강하고 더 즐겁고"></a>
         <a class="slide hs" href="#daycare-facility"><img class="bn" src="img/banner3.jpg?v=4" alt="그림 그리기 프로그램을 즐기는 어르신들"></a>
       </div>
@@ -2326,7 +2328,7 @@ function showPage(page, anchor){
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on', p.id==='pg-'+page));
   document.querySelectorAll('#gnb>li').forEach(li=>li.classList.toggle('on', li.dataset.p===page));
   document.querySelectorAll('#acc>div').forEach(d=>{ d.classList.toggle('cur', d.dataset.p===page); d.classList.toggle('open', d.dataset.p===page); });
-  if(page==='home') startSlides(); else stopSlides();
+  if(page==='home') startSlides(); else { stopSlides(); const hv=document.getElementById('hero-video'); if(hv) hv.pause(); }
   if(page!=='home'){
     // 서브메뉴 1개 = 1페이지
     const pg=document.getElementById('pg-'+page), secs=[...pg.querySelectorAll('.psec')];
@@ -2361,10 +2363,18 @@ function slideShow(i){
   $('#dots').innerHTML=ss.map((_,k)=>`<button class="${k===SI?'on':''}" onclick="slideShow(${k});restartSlides()" aria-label="${k+1}번 배너"></button>`).join('');
   $('#snum').textContent=`0${SI+1} / 0${ss.length}`;
   $('#hctl').classList.toggle('dark', ss[SI].hasAttribute('data-dark'));
+  const v=document.getElementById('hero-video');
+  if(v){ if(ss[SI].contains(v)){ try{v.currentTime=0;}catch(e){} const p=v.play(); if(p&&p.catch) p.catch(()=>{}); } else v.pause(); }
 }
 function slideGo(n){ slideShow(SI+n); restartSlides(); }
-function startSlides(){ stopSlides(); if(PLAY) ST_T=setInterval(()=>slideShow(SI+1),6000); }
-function stopSlides(){ clearInterval(ST_T); }
+function startSlides(){ stopSlides(); if(!PLAY) return;
+  const v=document.getElementById('hero-video'), cur=document.querySelectorAll('#slides .slide')[SI];
+  if(v && cur && cur.contains(v)){ /* 영상은 끝까지 재생한 뒤 다음 사진으로 */
+    v.onended=()=>{ slideShow(SI+1); startSlides(); };
+    ST_T=setTimeout(()=>{ if(v.paused||v.readyState<2){ slideShow(SI+1); startSlides(); } },8000); /* 재생이 막힌 경우 대비 */
+    return; }
+  ST_T=setTimeout(()=>{ slideShow(SI+1); startSlides(); },6000); }
+function stopSlides(){ clearTimeout(ST_T); clearInterval(ST_T); const v=document.getElementById('hero-video'); if(v) v.onended=null; }
 function restartSlides(){ if(PLAY) startSlides(); }
 function togglePlay(){ PLAY=!PLAY; $('#playbtn').innerHTML = PLAY
   ? '<svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>'
