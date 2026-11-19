@@ -2161,7 +2161,7 @@ td.l,th.l{text-align:left}
     <button class="a11y-reset" onclick="A11Y={size:0,dark:false};applyA11y()">처음 상태로</button>
   </div>
   <button class="bgm-fab" id="bgm-fab" onclick="bgmToggle()" aria-label="배경음악 켜기/끄기" title="배경음악"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg><span id="bgm-lb">음악</span><i class="bgm-eq"><b></b><b></b><b></b></i></button>
-  <audio id="bgm" src="img/bgm_healing.mp3" loop preload="none"></audio>
+  <audio id="bgm" src="img/bgm_healing.mp3" loop preload="auto"></audio>
   <button class="inq-fab" onclick="openInquiry()" aria-label="상담 문의 남기기"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>상담<br>문의</span></button>
   <button class="a11y-fab" aria-label="글자 크기 · 명암 반전 설정" onclick="const p=$('#a11y-panel');p.hidden=!p.hidden"><span>가</span><small>보기</small></button>
 </div>
@@ -3434,8 +3434,11 @@ function bgmUI(on){ const b=document.getElementById('bgm-fab'); if(!b) return; b
 function bgmPlay(){ const a=document.getElementById('bgm'); if(!a) return; a.volume=0; const p=a.play(); if(p&&p.then) p.then(()=>{ bgmUI(true); clearInterval(BGM_FADE); BGM_FADE=setInterval(()=>{ a.volume=Math.min(.35,a.volume+.02); if(a.volume>=.35) clearInterval(BGM_FADE); },120); }).catch(()=>bgmUI(false)); }
 function bgmStop(){ const a=document.getElementById('bgm'); if(!a) return; clearInterval(BGM_FADE); BGM_FADE=setInterval(()=>{ a.volume=Math.max(0,a.volume-.04); if(a.volume<=0){ clearInterval(BGM_FADE); a.pause(); } },60); bgmUI(false); }
 function bgmToggle(){ const a=document.getElementById('bgm'); if(a.paused||a.volume===0){ bgmSet('on'); bgmPlay(); } else { bgmSet('off'); bgmStop(); } }
-(function(){ const first=e=>{ ['pointerdown','keydown','touchstart'].forEach(k=>removeEventListener(k,first,true));
-    if(e.target && e.target.closest && e.target.closest('#bgm-fab')) return; if(bgmPref()!=='off') bgmPlay(); };
+const BGM_PC=(()=>{ try{ return matchMedia('(pointer:fine)').matches && innerWidth>=1024 && !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent); }catch(e){ return false; } })();
+(function(){ if(!BGM_PC||bgmPref()==='off') return;   /* PC에서만 자동 재생, 휴대폰·태블릿은 버튼으로만 */
+  bgmPlay();   /* 브라우저가 허용하면 바로 재생 */
+  const first=e=>{ ['pointerdown','keydown','touchstart'].forEach(k=>removeEventListener(k,first,true));
+    if(e.target && e.target.closest && e.target.closest('#bgm-fab')) return; const a=document.getElementById('bgm'); if(a&&a.paused) bgmPlay(); };
   ['pointerdown','keydown','touchstart'].forEach(k=>addEventListener(k,first,true)); })();
 buildMenus(); renderSite(); renderOrg(); renderFacility(); pcBuild(); pcAuto(); dyBuild(); dyAuto(); hcpBuild(); hcpAuto(); applyA11y(); slideShow(0); route();
 if(FBA) FBA.onAuthStateChanged(u=>{ if(!u||ME) return; let want=''; try{ want=sessionStorage.getItem(KEY+'-me')||''; }catch(e){}
