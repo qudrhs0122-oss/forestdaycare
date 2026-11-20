@@ -2394,13 +2394,14 @@ function togglePlay(){ PLAY=!PLAY; $('#playbtn').innerHTML = PLAY
   : '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>'; PLAY?startSlides():stopSlides(); }
 
 /* ---------- 상담 ---------- */
-const BADGE={b1:'청구그린기관'};
+const BADGE={b1:'3년 연속 청구그린기관'};
 const CERTS={b1:[
   {img:'img/cert_green_2026.jpg',y:'2026',t:'청구그린(Green)기관',d:'선정기간 2026. 4. 1. ~ 2027. 3. 31. · 주야간보호'},
+  {img:'img/cert_green_2025.jpg',y:'2025',t:'청구그린(Green)기관',d:'선정기간 2025. 4. 1. ~ 2026. 3. 31. · 주야간보호'},
   {img:'img/cert_green_2024.jpg',y:'2024',t:'청구그린(Green)기관',d:'선정기간 2024. 4. 1. ~ 2025. 3. 31. · 주야간보호'}
 ]};
 function certStrip(k){ const c=CERTS[k]; if(!c) return '';
-  return `<div class="cert-strip"><div class="cs-t"><b>국민건강보험공단 선정 청구그린(Green)기관</b><span>장기요양급여비용 청구의 모범이 되는 기관으로 선정되었습니다.</span></div>
+  return `<div class="cert-strip"><div class="cs-t"><b>국민건강보험공단 선정 청구그린(Green)기관 · 3년 연속</b><span>2024년부터 2026년까지 3년 연속, 장기요양급여비용 청구의 모범이 되는 기관으로 선정되었습니다.</span></div>
     <div class="cs-list">${c.map((x,i)=>`<figure onclick="openCert('${k}',${i})"><img src="${x.img}" alt="${esc(x.y)}년 ${esc(x.t)} 인증서"><figcaption>${esc(x.y)}년 선정</figcaption></figure>`).join('')}</div></div>`; }
 function openCert(k,i){ k=k||'b1'; i=i||0; const c=CERTS[k], n=c.length, x=c[i];
   modal(`<div class="cert-view"><img src="${x.img}" alt="${esc(x.y)}년 ${esc(x.t)} 인증서"><div class="cv-cap"><b>${esc(x.y)}년 ${esc(x.t)}</b><span>${esc(DB.branches[k].name)} · ${esc(x.d)}</span><small>국민건강보험공단 이사장</small></div>
